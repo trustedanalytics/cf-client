@@ -139,13 +139,13 @@ public class CcClient implements CcOperations {
         template.put(getUrl(spaceDevelopersPath), null, pathVars);
     }
 
-    @Override public CcOrg getOrg(UUID org) {
+    @Override public Observable<CcOrg> getOrg(UUID org) {
         if (org == null) {
             throw new IllegalArgumentException("Org uuid must be not null");
         }
         String orgsPath = URL_V2_ORGANIZATIONS_ORG;
         Map<String, Object> pathVars = ImmutableMap.of("org", org.toString());
-        return template.getForEntity(baseUrl + orgsPath, CcOrg.class, pathVars).getBody();
+        return Observable.defer(() -> Observable.just(template.getForEntity(baseUrl + orgsPath, CcOrg.class, pathVars).getBody()));
     }
 
     @Override
@@ -175,19 +175,25 @@ public class CcClient implements CcOperations {
         return template.exchange(url, HttpMethod.GET, null, parameterizedTypeReference).getBody();
     }
 
-    @Override public CcSpace getSpace(UUID spaceId) {
+    private <T> Page<T> getForEntity(String url, ParameterizedTypeReference<Page<T>> parameterizedTypeReference, Map<String, Object> pathVars) {
+        return template.exchange(url, HttpMethod.GET, null, parameterizedTypeReference, pathVars).getBody();
+    }
+
+    @Override public Observable<CcSpace> getSpace(UUID spaceId) {
         if (spaceId == null) {
             throw new IllegalArgumentException("spaceId uuid must be not null");
         }
         String spacePath = "/v2/spaces/{space}";
         Map<String, Object> pathVars = ImmutableMap.of(SPACE, spaceId.toString());
-        return template.getForEntity(baseUrl + spacePath, CcSpace.class, pathVars).getBody();
+        return Observable.defer(() -> Observable.just(template.getForEntity(baseUrl + spacePath, CcSpace.class, pathVars).getBody()));
     }
 
-    @Override public String getSpaces(UUID org) {
+    @Override public Observable<CcSpace> getSpaces(UUID org) {
         String spacesPath = "/v2/organizations/{org}/spaces?inline-relations-depth=1";
         Map<String, Object> pathVars = ImmutableMap.of("org", org.toString());
-        return template.getForEntity(baseUrl + spacesPath, String.class, pathVars).getBody();
+        return Observable.defer(() ->
+            concatPages(getForEntity(baseUrl + spacesPath, new ParameterizedTypeReference<Page<CcSpace>>() {}, pathVars),
+                nextUrl -> getForEntity(baseUrl + nextUrl, new ParameterizedTypeReference<Page<CcSpace>>() {}, pathVars)));
     }
 
     @Override public Collection<CcOrg> getManagedOrganizations(UUID userId) {

@@ -63,7 +63,7 @@ public interface CcOperationsOrgsSpaces {
      * @param orgUUID organization GUID
      * @return organization
      */
-    CcOrg getOrg(UUID orgUUID);
+    Observable<CcOrg> getOrg(UUID orgUUID);
 
     /**
      * Returns all organizations.
@@ -82,14 +82,14 @@ public interface CcOperationsOrgsSpaces {
      * @param spaceId space GUID
      * @return space
      */
-    CcSpace getSpace(UUID spaceId);
+    Observable<CcSpace> getSpace(UUID spaceId);
 
     /**
      * Returns all spaces withing organization identified by given GUID.
      * @param org GUID
      * @return spaces
      */
-    String getSpaces(UUID org);
+    Observable<CcSpace> getSpaces(UUID org);
 
     /**
      * Returns organizations managed by user identified by given GUID.

@@ -157,8 +157,8 @@ public class FeignClient implements CcOperations {
         spaceResource.associateManagerWithSpace(spaceGuid, userGuid);
     }
 
-    @Override public CcOrg getOrg(UUID orgUUID) {
-        return organizationResource.getOrganization(orgUUID);
+    @Override public Observable<CcOrg> getOrg(UUID orgUUID) {
+        return Observable.defer(() -> Observable.just(organizationResource.getOrganization(orgUUID)));
     }
 
     @Override
@@ -181,12 +181,12 @@ public class FeignClient implements CcOperations {
         }
     }
 
-    @Override public CcSpace getSpace(UUID spaceId) {
-        return spaceResource.getSpace(spaceId);
+    @Override public Observable<CcSpace> getSpace(UUID spaceId) {
+        return Observable.defer(() -> Observable.just(spaceResource.getSpace(spaceId)));
     }
 
-    @Override public String getSpaces(UUID org) {
-        return organizationResource.getSpacesForOrganization(org);
+    @Override public Observable<CcSpace> getSpaces(UUID org) {
+        return Observable.defer(() -> concatPages(organizationResource.getSpacesForOrganization(org), spaceResource::getSpaces));
     }
 
     @Override public Collection<CcOrg> getManagedOrganizations(UUID user) {

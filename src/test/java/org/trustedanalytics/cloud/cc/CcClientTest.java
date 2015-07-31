@@ -49,6 +49,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestOperations;
+import rx.Observable;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -189,7 +190,7 @@ import java.util.function.Supplier;
         String apiUrl = BASE_URL + "/v2/organizations/{org}";
         mockGetForEntity(CcOrg.class, true);
 
-        sut.getOrg(guid);
+        sut.getOrg(guid).toBlocking().single();
 
         verify(template).getForEntity(eq(apiUrl), eq(CcOrg.class), anyMapOf(String.class,
                 Object.class));
@@ -215,7 +216,7 @@ import java.util.function.Supplier;
 
     @Test public void getSpace_correctData_correctRestParams() {
         String apiUrl = BASE_URL + "/v2/spaces/{space}";
-        verifyGetForEntity(sut::getSpace, apiUrl, CcSpace.class);
+        verifyGetForEntityForObservable(sut::getSpace, apiUrl, CcSpace.class);
     }
 
     @SuppressWarnings(value = "unchecked")
@@ -226,6 +227,16 @@ import java.util.function.Supplier;
 
         verify(template).getForEntity(eq(apiUrl), eq(verifyType), anyMapOf(String.class,
                 Object.class));
+    }
+
+    @SuppressWarnings(value = "unchecked")
+    private <T> void verifyGetForEntityForObservable(Function<UUID, Observable<T>> fun, String apiUrl, Class verifyType){
+        UUID guid = UUID.randomUUID();
+        mockGetForEntity(verifyType, true);
+        fun.apply(guid).toBlocking().single();
+
+        verify(template).getForEntity(eq(apiUrl), eq(verifyType), anyMapOf(String.class,
+            Object.class));
     }
 
     @Test(expected = IllegalArgumentException.class)

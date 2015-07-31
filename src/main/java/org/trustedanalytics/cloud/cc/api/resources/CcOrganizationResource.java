@@ -16,6 +16,7 @@
 package org.trustedanalytics.cloud.cc.api.resources;
 
 import org.trustedanalytics.cloud.cc.api.CcOrg;
+import org.trustedanalytics.cloud.cc.api.CcSpace;
 import org.trustedanalytics.cloud.cc.api.Page;
 import org.trustedanalytics.cloud.cc.api.manageusers.CcUsersList;
 
@@ -67,5 +68,5 @@ public interface CcOrganizationResource {
     void removeOrganizationRoleFromUser(@Param("org") UUID org, @Param("user") UUID user, @Param("role") String role);
 
     @RequestLine("GET /v2/organizations/{org}/spaces?inline-relations-depth=1")
-    String getSpacesForOrganization(@Param("org") UUID org);
+    Page<CcSpace> getSpacesForOrganization(@Param("org") UUID org);
 }
