@@ -23,8 +23,6 @@ import org.trustedanalytics.cloud.cc.api.queries.FilterQuery;
 
 import org.cloudfoundry.client.lib.util.CloudEntityResourceMapper;
 import org.cloudfoundry.client.lib.util.JsonUtil;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestOperations;
@@ -282,6 +280,12 @@ public class CcClient implements CcOperations {
         return template.getForEntity(baseUrl + path, CcSummary.class, pathVars).getBody();
     }
 
+    @Override public Observable<CcExtendedService> getExtendedServices() {
+        return Observable.defer(() ->
+            concatPages(getForEntity(baseUrl + "/v2/services", new ParameterizedTypeReference<Page<CcExtendedService>>() {}),
+                nextUrl -> getForEntity(baseUrl + nextUrl, new ParameterizedTypeReference<Page<CcExtendedService>>() {})));
+    }
+
     @Override public String getServices(UUID spaceGuid) {
         if (spaceGuid == null) {
             throw new IllegalArgumentException(GUID_MUST_BE_NOT_NULL);
@@ -290,6 +294,15 @@ public class CcClient implements CcOperations {
         String servicesPath = "/v2/spaces/{space}/services?inline-relations-depth=1";
         Map<String, Object> pathVars = ImmutableMap.of(SPACE, spaceGuid.toString());
         return template.getForEntity(baseUrl + servicesPath, String.class, pathVars).getBody();
+    }
+
+    @Override
+    public Observable<CcExtendedServicePlan> getExtendedServicePlans(UUID serviceGuid) {
+        String spacesPath = "/v2/services/{service}/service_plans";
+        Map<String, Object> pathVars = ImmutableMap.of("service", serviceGuid.toString());
+        return Observable.defer(() ->
+            concatPages(getForEntity(baseUrl + spacesPath, new ParameterizedTypeReference<Page<CcExtendedServicePlan>>() {}, pathVars),
+                nextUrl -> getForEntity(baseUrl + nextUrl, new ParameterizedTypeReference<Page<CcExtendedServicePlan>>() {}, pathVars)));
     }
 
     @Override public String getService(UUID serviceGuid) {

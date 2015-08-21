@@ -218,6 +218,17 @@ public class FeignClient implements CcOperations {
         return userResource.getUserSpaces(userGuid, ROLE_MAP.get(role), orgGuid).getSpaces();
     }
 
+    @Override
+    public Observable<CcExtendedService> getExtendedServices() {
+        return Observable.defer(() -> concatPages(serviceResource.getServices(), serviceResource::getServices));
+    }
+
+    @Override
+    public Observable<CcExtendedServicePlan> getExtendedServicePlans(UUID serviceGuid) {
+        return Observable.defer(() -> concatPages(serviceResource.getExtendedServicePlans(serviceGuid),
+            serviceResource::getExtendedServicePlans));
+    }
+
     @Override public String getServices(UUID spaceGuid) {
         return spaceResource.getServices(spaceGuid);
     }

@@ -15,12 +15,15 @@
  */
 package org.trustedanalytics.cloud.cc.api.resources;
 
-import org.trustedanalytics.cloud.cc.api.CcNewServiceInstance;
-
 import feign.Headers;
 import feign.Param;
 import feign.RequestLine;
+import org.trustedanalytics.cloud.cc.api.CcExtendedService;
+import org.trustedanalytics.cloud.cc.api.CcExtendedServicePlan;
+import org.trustedanalytics.cloud.cc.api.Page;
+import org.trustedanalytics.cloud.cc.api.CcNewServiceInstance;
 
+import java.net.URI;
 import java.util.UUID;
 
 @Headers("Accept: application/json")
@@ -28,6 +31,18 @@ public interface CcServiceResource {
 
     @RequestLine("GET /v2/services/{service}?inline-relations-depth=1")
     String getService(@Param("service") UUID service);
+
+    @RequestLine("GET /v2/services")
+    Page<CcExtendedService> getServices();
+
+    @RequestLine("GET {nextPageUrl}")
+    Page<CcExtendedService> getServices(URI nextPageUrl);
+
+    @RequestLine("GET /v2/services/{service}/service_plans")
+    Page<CcExtendedServicePlan> getExtendedServicePlans(@Param("service") UUID service);
+
+    @RequestLine("GET {nextPageUrl}")
+    Page<CcExtendedServicePlan> getExtendedServicePlans(URI nextPageUrl);
 
     @RequestLine("POST /v2/service_instances")
     CcNewServiceInstance createServiceInstance(CcNewServiceInstance instance);

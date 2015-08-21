@@ -16,6 +16,7 @@
 package org.trustedanalytics.cloud.cc.api;
 
 import org.trustedanalytics.cloud.cc.api.queries.FilterQuery;
+import rx.Observable;
 
 import java.util.UUID;
 
@@ -26,6 +27,18 @@ public interface CcOperationsServices extends CcOperationsCommon {
      * @return services
      */
     String getServices(UUID spaceGuid);
+
+    /**
+     * Returns services
+     * @return services
+     */
+    Observable<CcExtendedService> getExtendedServices();
+
+    /**
+     * Returns service plans within service identified by given GUID
+     * @return services plans
+     */
+    Observable<CcExtendedServicePlan> getExtendedServicePlans(UUID serviceGuid);
 
     /**
      * Returns service identified by given GUID.
