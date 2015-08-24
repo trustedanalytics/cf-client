@@ -26,12 +26,12 @@ public interface UaaOperations {
 
     ScimUser createUser(String username, String password);
 
-	void deleteUser(UUID userGuid);
+    void deleteUser(UUID userGuid);
 
-	SearchResults<ScimUser> getUsers();
+    SearchResults<ScimUser> getUsers();
 
-    Collection<UserIdNamePair> findUserNames(Collection<UUID> users); 
-    
+    Collection<UserIdNamePair> findUserNames(Collection<UUID> users);
+
     void changePassword(UUID guid, ChangePasswordRequest request);
 
     Optional<UserIdNamePair> findUserIdByName(String userName);

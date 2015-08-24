@@ -27,26 +27,26 @@ public class SearchResults<T> {
     private Collection<String> schemas;
 
     public void setResources(Collection<T> resources) {
-		this.resources = resources;
-	}
+        this.resources = resources;
+    }
 
-	public void setStartIndex(int startIndex) {
-		this.startIndex = startIndex;
-	}
+    public void setStartIndex(int startIndex) {
+        this.startIndex = startIndex;
+    }
 
-	public void setItemsPerPage(int itemsPerPage) {
-		this.itemsPerPage = itemsPerPage;
-	}
+    public void setItemsPerPage(int itemsPerPage) {
+        this.itemsPerPage = itemsPerPage;
+    }
 
-	public void setTotalResults(int totalResults) {
-		this.totalResults = totalResults;
-	}
+    public void setTotalResults(int totalResults) {
+        this.totalResults = totalResults;
+    }
 
-	public void setSchemas(Collection<String> schemas) {
-		this.schemas = schemas;
-	}
+    public void setSchemas(Collection<String> schemas) {
+        this.schemas = schemas;
+    }
 
-	public Collection<String> getSchemas() {
+    public Collection<String> getSchemas() {
         return schemas;
     }
 

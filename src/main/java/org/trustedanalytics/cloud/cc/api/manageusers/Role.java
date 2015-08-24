@@ -18,6 +18,7 @@ package org.trustedanalytics.cloud.cc.api.manageusers;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.util.EnumSet;
+import java.util.Set;
 
 
 public enum Role {
@@ -27,8 +28,8 @@ public enum Role {
     DEVELOPERS("developers"),
     USERS("users"); //every user has to be in that role along any other
 
-    public static final EnumSet<Role> ORG_ROLES = EnumSet.of(MANAGERS, BILLING_MANAGERS, AUDITORS, USERS);
-    public static final EnumSet<Role> SPACE_ROLES = EnumSet.of(AUDITORS, DEVELOPERS, MANAGERS);
+    public static final Set<Role> ORG_ROLES = EnumSet.of(MANAGERS, BILLING_MANAGERS, AUDITORS, USERS);
+    public static final Set<Role> SPACE_ROLES = EnumSet.of(AUDITORS, DEVELOPERS, MANAGERS);
 
     private final String roleName;
 

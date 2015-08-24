@@ -48,7 +48,9 @@ public class CcNewServiceInstance {
     }
 
     @JsonProperty("organization_guid")
-    public UUID getOrganizationGuid() { return organizationGuid; }
+    public UUID getOrganizationGuid() {
+        return organizationGuid;
+    }
 
     @JsonProperty("space_guid")
     public UUID getSpaceGuid() {
@@ -61,7 +63,9 @@ public class CcNewServiceInstance {
     }
 
     @JsonProperty("organization_guid")
-    public void setOrganizationGuid(UUID organizationGuid) { this.organizationGuid = organizationGuid; }
+    public void setOrganizationGuid(UUID organizationGuid) {
+        this.organizationGuid = organizationGuid;
+    }
 
     @JsonProperty("space_guid")
     public void setSpaceGuid(UUID spaceGuid) {
