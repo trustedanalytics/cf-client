@@ -322,7 +322,7 @@ public class CcClient implements CcOperations {
         return template.getForEntity(baseUrl + servicePath, CcServiceBindingList.class, pathVars).getBody();
     }
 
-    @Override public CcNewServiceInstance createServiceInstance(
+    @Override public Observable<CcExtendedServiceInstance> createServiceInstance(
         CcNewServiceInstance serviceInstance) {
 
         if (serviceInstance == null || serviceInstance.getName() == null || serviceInstance.getPlanGuid() == null
@@ -331,8 +331,8 @@ public class CcClient implements CcOperations {
         }
 
         String path = "/v2/service_instances";
-        return template.postForEntity(baseUrl + path, serviceInstance, CcNewServiceInstance.class)
-            .getBody();
+        return Observable.defer(() ->
+            Observable.just(template.postForEntity(baseUrl + path, serviceInstance, CcExtendedServiceInstance.class).getBody()));
     }
 
     @Override public void deleteServiceInstance(UUID instanceGuid) {

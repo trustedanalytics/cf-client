@@ -52,7 +52,7 @@ public interface CcOperationsServices extends CcOperationsCommon {
      * @param serviceInstance service instance
      * @return new service instance
      */
-    CcNewServiceInstance createServiceInstance(CcNewServiceInstance serviceInstance);
+    Observable<CcExtendedServiceInstance> createServiceInstance(CcNewServiceInstance serviceInstance);
 
     /**
      * Deletes service instance identified by given GUID.

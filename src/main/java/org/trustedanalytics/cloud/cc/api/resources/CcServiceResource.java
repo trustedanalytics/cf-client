@@ -22,6 +22,7 @@ import org.trustedanalytics.cloud.cc.api.CcExtendedService;
 import org.trustedanalytics.cloud.cc.api.CcExtendedServicePlan;
 import org.trustedanalytics.cloud.cc.api.Page;
 import org.trustedanalytics.cloud.cc.api.CcNewServiceInstance;
+import org.trustedanalytics.cloud.cc.api.CcExtendedServiceInstance;
 
 import java.net.URI;
 import java.util.UUID;
@@ -45,7 +46,7 @@ public interface CcServiceResource {
     Page<CcExtendedServicePlan> getExtendedServicePlans(URI nextPageUrl);
 
     @RequestLine("POST /v2/service_instances")
-    CcNewServiceInstance createServiceInstance(CcNewServiceInstance instance);
+    CcExtendedServiceInstance createServiceInstance(CcNewServiceInstance instance);
 
     @RequestLine("DELETE /v2/service_instances/{instance}")
     void deleteServiceInstance(@Param("instance") UUID instance);

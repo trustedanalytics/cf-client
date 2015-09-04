@@ -242,8 +242,8 @@ public class FeignClient implements CcOperations {
         return serviceBindingResource.getServiceBindings(filterQuery);
     }
 
-    @Override public CcNewServiceInstance createServiceInstance(CcNewServiceInstance serviceInstance) {
-        return serviceResource.createServiceInstance(serviceInstance);
+    @Override public Observable<CcExtendedServiceInstance> createServiceInstance(CcNewServiceInstance serviceInstance) {
+        return Observable.defer(() -> Observable.just(serviceResource.createServiceInstance(serviceInstance)));
     }
 
     @Override public void deleteServiceInstance(UUID instanceGuid) {

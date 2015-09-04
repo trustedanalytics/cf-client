@@ -17,26 +17,17 @@ package org.trustedanalytics.cloud.cc.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CcExtendedService {
-
-    @JsonProperty("entity")
-    private CcExtendedServiceEntity entity;
+public class CcExtendedServiceInstance {
 
     @JsonProperty("metadata")
     private CcMetadata metadata;
 
-    public CcExtendedServiceEntity getEntity() {
-        return entity;
-    }
-
-    public void setEntity(CcExtendedServiceEntity entity) {
-        this.entity = entity;
-    }
+    @JsonProperty("entity")
+    private CcExtendedServiceInstanceEntity entity;
 
     public CcMetadata getMetadata() {
         return metadata;
@@ -46,6 +37,14 @@ public class CcExtendedService {
         this.metadata = metadata;
     }
 
+    public CcExtendedServiceInstanceEntity getEntity() {
+        return entity;
+    }
+
+    public void setEntity(CcExtendedServiceInstanceEntity entity) {
+        this.entity = entity;
+    }
+
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 31).append(metadata.getGuid()).toHashCode();
@@ -53,13 +52,13 @@ public class CcExtendedService {
 
     @Override
     public boolean equals(Object obj) {
-        if(!(obj instanceof CcExtendedService)) {
+        if(!(obj instanceof CcExtendedServiceInstance)) {
             return false;
         }
         if (obj == this) {
             return true;
         }
-        CcExtendedService service = (CcExtendedService)obj;
+        CcExtendedServiceInstance service = (CcExtendedServiceInstance)obj;
         return new EqualsBuilder()
             .append(metadata.getGuid(), service.getMetadata().getGuid())
             .isEquals();

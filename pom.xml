@@ -117,9 +117,9 @@
         </plugins>
     </build>
     <properties>
-        <jacoco-measurement-instructions>0.181</jacoco-measurement-instructions>    <!-- Value <0.000, 1.000>, at least 3 places after coma -->
-        <jacoco-measurement-branches>0.102</jacoco-measurement-branches>            <!-- Value <0.000, 1.000>, at least 3 places after coma -->
-        <jacoco-measurement-lines>0.134</jacoco-measurement-lines>                  <!-- Value <0.000, 1.000>, at least 3 places after coma -->
-        <jacoco-measurement-classes>0.098</jacoco-measurement-classes>              <!-- Value <0.000, 1.000>, at least 3 places after coma -->
+        <jacoco-measurement-instructions>0.178</jacoco-measurement-instructions>    <!-- Value <0.000, 1.000>, at least 3 places after coma -->
+        <jacoco-measurement-branches>0.101</jacoco-measurement-branches>            <!-- Value <0.000, 1.000>, at least 3 places after coma -->
+        <jacoco-measurement-lines>0.129</jacoco-measurement-lines>                  <!-- Value <0.000, 1.000>, at least 3 places after coma -->
+        <jacoco-measurement-classes>0.095</jacoco-measurement-classes>              <!-- Value <0.000, 1.000>, at least 3 places after coma -->
     </properties>
 </project>

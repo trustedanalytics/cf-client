@@ -35,14 +35,14 @@ public class CcExtendedServiceEntity {
     @JsonProperty("description")
     private String description;
 
-    @JsonProperty("long_description")
-    private String long_description;
+    @JsonProperty("long_Description")
+    private String longDescription;
 
     @JsonProperty("version")
     private String version;
 
     @JsonProperty("info_url")
-    private String info_url;
+    private String infoUrl;
 
     @JsonProperty("active")
     private Boolean active;
@@ -51,7 +51,7 @@ public class CcExtendedServiceEntity {
     private Boolean bindable;
 
     @JsonProperty("unique_id")
-    private String unique_id;
+    private String uniqueId;
 
     @JsonProperty("extra")
     private String extra;
@@ -63,16 +63,16 @@ public class CcExtendedServiceEntity {
     private Object requires;
 
     @JsonProperty("documentation_url")
-    private String documentation_url;
+    private String documentationUrl;
 
     @JsonProperty("service_broker_guid")
-    private UUID service_broker_guid;
+    private UUID serviceBrokerGuid;
 
     @JsonProperty("plan_updateable")
-    private Boolean plan_updateable;
+    private Boolean planUpdateable;
 
     @JsonProperty("service_plans_url")
-    private String service_plans_url;
+    private String servicePlansUrl;
 
     public String getLabel() {
         return label;
@@ -106,12 +106,12 @@ public class CcExtendedServiceEntity {
         this.description = description;
     }
 
-    public String getLong_description() {
-        return long_description;
+    public String getLongDescription() {
+        return longDescription;
     }
 
-    public void setLong_description(String long_description) {
-        this.long_description = long_description;
+    public void setLongDescription(String longDescription) {
+        this.longDescription = longDescription;
     }
 
     public String getVersion() {
@@ -122,12 +122,12 @@ public class CcExtendedServiceEntity {
         this.version = version;
     }
 
-    public String getInfo_url() {
-        return info_url;
+    public String getInfoUrl() {
+        return infoUrl;
     }
 
-    public void setInfo_url(String info_url) {
-        this.info_url = info_url;
+    public void setInfoUrl(String infoUrl) {
+        this.infoUrl = infoUrl;
     }
 
     public Boolean getActive() {
@@ -146,12 +146,12 @@ public class CcExtendedServiceEntity {
         this.bindable = bindable;
     }
 
-    public String getUnique_id() {
-        return unique_id;
+    public String getUniqueId() {
+        return uniqueId;
     }
 
-    public void setUnique_id(String unique_id) {
-        this.unique_id = unique_id;
+    public void setUniqueId(String uniqueId) {
+        this.uniqueId = uniqueId;
     }
 
     public String getExtra() {
@@ -178,35 +178,35 @@ public class CcExtendedServiceEntity {
         this.requires = requires;
     }
 
-    public String getDocumentation_url() {
-        return documentation_url;
+    public String getDocumentationUrl() {
+        return documentationUrl;
     }
 
-    public void setDocumentation_url(String documentation_url) {
-        this.documentation_url = documentation_url;
+    public void setDocumentationUrl(String documentationUrl) {
+        this.documentationUrl = documentationUrl;
     }
 
-    public UUID getService_broker_guid() {
-        return service_broker_guid;
+    public UUID getServiceBrokerGuid() {
+        return serviceBrokerGuid;
     }
 
-    public void setService_broker_guid(UUID service_broker_guid) {
-        this.service_broker_guid = service_broker_guid;
+    public void setServiceBrokerGuid(UUID serviceBrokerGuid) {
+        this.serviceBrokerGuid = serviceBrokerGuid;
     }
 
-    public Boolean getPlan_updateable() {
-        return plan_updateable;
+    public Boolean getPlanUpdateable() {
+        return planUpdateable;
     }
 
-    public void setPlan_updateable(Boolean plan_updateable) {
-        this.plan_updateable = plan_updateable;
+    public void setPlanUpdateable(Boolean planUpdateable) {
+        this.planUpdateable = planUpdateable;
     }
 
-    public String getService_plans_url() {
-        return service_plans_url;
+    public String getServicePlansUrl() {
+        return servicePlansUrl;
     }
 
-    public void setService_plans_url(String service_plans_url) {
-        this.service_plans_url = service_plans_url;
+    public void setServicePlansUrl(String servicePlansUrl) {
+        this.servicePlansUrl = servicePlansUrl;
     }
 }

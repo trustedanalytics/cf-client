@@ -31,25 +31,25 @@ public class CcExtendedServicePlanEntity {
     private String description;
 
     @JsonProperty("service_guid")
-    private String service_guid;
+    private String serviceGuid;
 
     @JsonProperty("extra")
     private String extra;
 
     @JsonProperty("unique_id")
-    private String unique_id;
+    private String uniqueId;
 
     @JsonProperty("public")
-    private Boolean public_;
+    private Boolean publicStatus;
 
     @JsonProperty("active")
     private Boolean active;
 
     @JsonProperty("service_url")
-    private String service_url;
+    private String serviceUrl;
 
     @JsonProperty("service_instances_url")
-    private String service_instances_url;
+    private String serviceInstancesUrl;
 
     @JsonProperty("metadata")
     private CcMetadata metadata;
@@ -78,12 +78,12 @@ public class CcExtendedServicePlanEntity {
         this.description = description;
     }
 
-    public String getService_guid() {
-        return service_guid;
+    public String getServiceGuid() {
+        return serviceGuid;
     }
 
-    public void setService_guid(String service_guid) {
-        this.service_guid = service_guid;
+    public void setServiceGuid(String serviceGuid) {
+        this.serviceGuid = serviceGuid;
     }
 
     public String getExtra() {
@@ -94,20 +94,20 @@ public class CcExtendedServicePlanEntity {
         this.extra = extra;
     }
 
-    public String getUnique_id() {
-        return unique_id;
+    public String getUniqueId() {
+        return uniqueId;
     }
 
-    public void setUnique_id(String unique_id) {
-        this.unique_id = unique_id;
+    public void setUniqueId(String uniqueId) {
+        this.uniqueId = uniqueId;
     }
 
-    public Boolean getPublic_() {
-        return public_;
+    public Boolean getPublicStatus() {
+        return publicStatus;
     }
 
-    public void setPublic_(Boolean public_) {
-        this.public_ = public_;
+    public void setPublicStatus(Boolean publicStatus) {
+        this.publicStatus = publicStatus;
     }
 
     public Boolean getActive() {
@@ -118,20 +118,20 @@ public class CcExtendedServicePlanEntity {
         this.active = active;
     }
 
-    public String getService_url() {
-        return service_url;
+    public String getServiceUrl() {
+        return serviceUrl;
     }
 
-    public void setService_url(String service_url) {
-        this.service_url = service_url;
+    public void setServiceUrl(String serviceUrl) {
+        this.serviceUrl = serviceUrl;
     }
 
-    public String getService_instances_url() {
-        return service_instances_url;
+    public String getServiceInstancesUrl() {
+        return serviceInstancesUrl;
     }
 
-    public void setService_instances_url(String service_instances_url) {
-        this.service_instances_url = service_instances_url;
+    public void setServiceInstancesUrl(String serviceInstancesUrl) {
+        this.serviceInstancesUrl = serviceInstancesUrl;
     }
 
     public String getName() {

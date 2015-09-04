@@ -38,6 +38,7 @@ import org.trustedanalytics.cloud.cc.api.CcAppStatus;
 import org.trustedanalytics.cloud.cc.api.manageusers.CcUsersList;
 import org.trustedanalytics.cloud.cc.api.manageusers.Role;
 import org.trustedanalytics.cloud.cc.api.manageusers.User;
+import org.trustedanalytics.cloud.cc.api.CcExtendedServiceInstance;
 
 import com.google.common.base.Function;
 
@@ -284,9 +285,9 @@ import java.util.function.Supplier;
 
         mockPostForEntity();
 
-        sut.createServiceInstance(serviceInstance);
+        sut.createServiceInstance(serviceInstance).toBlocking().single();
 
-        verify(template).postForEntity(apiUrl, serviceInstance, CcNewServiceInstance.class);
+        verify(template).postForEntity(apiUrl, serviceInstance, CcExtendedServiceInstance.class);
     }
 
     @Test(expected = IllegalArgumentException.class)
