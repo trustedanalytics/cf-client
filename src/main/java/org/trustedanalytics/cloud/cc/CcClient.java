@@ -461,6 +461,13 @@ public class CcClient implements CcOperations {
         assignUserRole(SPACES, userGuid, spaceGuid, role);
     }
 
+    @Override public Observable<CcAppEnv> getAppEnv(UUID appGuid) {
+        Objects.requireNonNull(appGuid);
+        String appEnvPath = "/v2/apps/{app}/env";
+        Map<String, Object> pathVars = ImmutableMap.of("app", appGuid.toString());
+        return Observable.defer(() -> Observable.just(new CcAppEnv(template.getForEntity(baseUrl + appEnvPath, CcAppEnv.class, pathVars).getBody())));
+    }
+
     private Collection<User> getUsers(UUID guid, Role role, String type) {
         return template
             .getForObject(baseUrl + "/v2/" + type + "/{guid}/" + role.getValue(), CcUsersList.class,

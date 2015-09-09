@@ -16,6 +16,7 @@
 package org.trustedanalytics.cloud.cc.api;
 
 import org.trustedanalytics.cloud.cc.api.queries.FilterQuery;
+import rx.Observable;
 
 import java.util.UUID;
 
@@ -74,4 +75,10 @@ public interface CcOperationsApps extends CcOperationsCommon {
      * @param bindingGuid binding GUID
      */
     void deleteServiceBinding(UUID bindingGuid);
+
+    /**
+     * Returns environment variables for application identified by given GUID.
+     * @param appGuid application GUID
+     */
+    Observable<CcAppEnv> getAppEnv(UUID appGuid);
 }

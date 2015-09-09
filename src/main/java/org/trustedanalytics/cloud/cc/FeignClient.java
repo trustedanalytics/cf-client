@@ -317,4 +317,8 @@ public class FeignClient implements CcOperations {
     @Override public void switchApp(UUID app, CcAppStatus appStatus) {
         applicationResource.switchApp(app, appStatus);
     }
+
+    @Override public Observable<CcAppEnv> getAppEnv(UUID appUUID) {
+        return Observable.defer(() -> Observable.just(new CcAppEnv(applicationResource.getAppEnv(appUUID))));
+    }
 }

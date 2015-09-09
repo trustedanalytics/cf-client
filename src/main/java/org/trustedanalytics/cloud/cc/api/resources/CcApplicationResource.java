@@ -49,4 +49,7 @@ public interface CcApplicationResource {
     @RequestLine("PUT /v2/apps/{app}")
     void switchApp(@Param("app") UUID app, CcAppStatus appStatus);
 
+    //Returned object can have undefined structure and therefore it is mapped to Object class
+    @RequestLine("GET /v2/apps/{app}/env")
+    Object getAppEnv(@Param("app") UUID app);
 }
