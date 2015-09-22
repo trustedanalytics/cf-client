@@ -18,11 +18,14 @@ package org.trustedanalytics.cloud.cc.api.resources;
 import feign.Headers;
 import feign.Param;
 import feign.RequestLine;
+
 import org.trustedanalytics.cloud.cc.api.CcExtendedService;
 import org.trustedanalytics.cloud.cc.api.CcExtendedServicePlan;
 import org.trustedanalytics.cloud.cc.api.Page;
 import org.trustedanalytics.cloud.cc.api.CcNewServiceInstance;
 import org.trustedanalytics.cloud.cc.api.CcExtendedServiceInstance;
+import org.trustedanalytics.cloud.cc.api.queries.FilterExpander;
+import org.trustedanalytics.cloud.cc.api.queries.FilterQuery;
 
 import java.net.URI;
 import java.util.UUID;
@@ -36,14 +39,23 @@ public interface CcServiceResource {
     @RequestLine("GET /v2/services")
     Page<CcExtendedService> getServices();
 
-    @RequestLine("GET {nextPageUrl}")
+    @RequestLine("GET")
     Page<CcExtendedService> getServices(URI nextPageUrl);
 
     @RequestLine("GET /v2/services/{service}/service_plans")
     Page<CcExtendedServicePlan> getExtendedServicePlans(@Param("service") UUID service);
 
-    @RequestLine("GET {nextPageUrl}")
+    @RequestLine("GET")
     Page<CcExtendedServicePlan> getExtendedServicePlans(URI nextPageUrl);
+
+    @RequestLine("GET /v2/service_instances")
+    Page<CcExtendedServiceInstance> getExtendedServiceInstances();
+
+    @RequestLine("GET /v2/service_instances?q={query}")
+    Page<CcExtendedServiceInstance> getExtendedServiceInstances(@Param(value = "query", expander = FilterExpander.class) FilterQuery query);
+
+    @RequestLine("GET")
+    Page<CcExtendedServiceInstance> getExtendedServiceInstances(URI nextPageUrl);
 
     @RequestLine("POST /v2/service_instances")
     CcExtendedServiceInstance createServiceInstance(CcNewServiceInstance instance);

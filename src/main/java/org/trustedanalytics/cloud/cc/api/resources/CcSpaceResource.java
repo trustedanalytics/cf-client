@@ -42,7 +42,7 @@ public interface CcSpaceResource {
     @RequestLine("GET /v2/spaces")
     Page<CcSpace> getSpaces();
 
-    @RequestLine("GET {nextPageUrl}")
+    @RequestLine("GET")
     Page<CcSpace> getSpaces(URI nextPageUrl);
 
     @RequestLine("GET /v2/spaces/{space}/{role}")

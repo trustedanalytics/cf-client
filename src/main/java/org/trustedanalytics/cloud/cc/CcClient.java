@@ -297,6 +297,16 @@ public class CcClient implements CcOperations {
     }
 
     @Override
+    public Observable<CcExtendedServiceInstance> getExtendedServiceInstances() {
+        throw new UnsupportedOperationException("Use: " + FeignClient.class.getName());
+    }
+
+    @Override
+    public Observable<CcExtendedServiceInstance> getExtendedServiceInstances(FilterQuery filterQuery) {
+        throw new UnsupportedOperationException("Use: " + FeignClient.class.getName());
+    }
+
+    @Override
     public Observable<CcExtendedServicePlan> getExtendedServicePlans(UUID serviceGuid) {
         String spacesPath = "/v2/services/{service}/service_plans";
         Map<String, Object> pathVars = ImmutableMap.of("service", serviceGuid.toString());

@@ -224,6 +224,18 @@ public class FeignClient implements CcOperations {
     }
 
     @Override
+    public Observable<CcExtendedServiceInstance> getExtendedServiceInstances() {
+        return Observable.defer(() -> concatPages(serviceResource.getExtendedServiceInstances(),
+            serviceResource::getExtendedServiceInstances));
+    }
+
+    @Override
+    public Observable<CcExtendedServiceInstance> getExtendedServiceInstances(FilterQuery filterQuery) {
+        return Observable.defer(() -> concatPages(serviceResource.getExtendedServiceInstances(filterQuery),
+            serviceResource::getExtendedServiceInstances));
+    }
+
+    @Override
     public Observable<CcExtendedServicePlan> getExtendedServicePlans(UUID serviceGuid) {
         return Observable.defer(() -> concatPages(serviceResource.getExtendedServicePlans(serviceGuid),
             serviceResource::getExtendedServicePlans));

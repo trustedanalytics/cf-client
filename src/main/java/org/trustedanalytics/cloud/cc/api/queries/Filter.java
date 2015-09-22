@@ -27,11 +27,14 @@ public enum Filter {
     DOMAIN_GUID("domain_guid"),
     HOST("host"),
     LABEL("label"),
+    NAME("name"),
     ORGANIZATION_GUID("organization_guid"),
     PATH("path"),
     PROVIDER("provider"),
     SERVICE_BROKER_GUID("service_broker_guid"),
-    SERVICE_INSTANCE_GUID("service_instance_guid");
+    SERVICE_INSTANCE_GUID("service_instance_guid"),
+    SERVICE_PLAN_GUID("service_plan_guid"),
+    SPACE_GUID("space_guid");
 
     private final String name;
 
