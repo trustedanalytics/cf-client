@@ -154,4 +154,16 @@ public interface CcOperationsOrgsSpaces {
      * @return spaces
      */
     Collection<CcSpace> getUsersSpaces(UUID userGuid, Role role, UUID orgGuid);
+
+    /**
+     * Get memory usage from organization identified by given GUID.
+     * @param orgGuid GUID
+     */
+    Observable<CcMemoryUsage> getMemoryUsage(UUID orgGuid);
+
+    /**
+     * Get organization summary from organization identified by given GUID.
+     * @param orgGuid GUID
+     */
+    Observable<CcOrgSummary> getOrgSummary(UUID orgGuid);
 }

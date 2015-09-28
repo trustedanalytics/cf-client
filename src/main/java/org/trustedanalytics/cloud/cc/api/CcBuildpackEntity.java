@@ -15,25 +15,21 @@
  */
 package org.trustedanalytics.cloud.cc.api;
 
-import rx.Observable;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.util.UUID;
+import lombok.Data;
 
-public interface CcOperationsCommon {
-    /**
-     * Returns summary for space identified by given UUID
-     * @param spaceGuid space UUID
-     * @return space summary
-     */
-    CcSummary getSpaceSummary(UUID spaceGuid);
+@Data
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class CcBuildpackEntity {
 
-    /**
-     * Returns buildpacks
-     */
-    Observable<CcBuildpack> getBuildpacks();
+    private String name;
 
-    /**
-     * Get quota
-     */
-    Observable<CcQuota> getQuota();
+    private int position;
+
+    private String filename;
+
+    private boolean enabled;
+
+    private boolean locked;
 }

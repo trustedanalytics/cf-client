@@ -15,7 +15,11 @@
  */
 package org.trustedanalytics.cloud.cc;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy;
 import org.trustedanalytics.cloud.cc.api.loggers.ScramblingSlf4jLogger;
+import org.trustedanalytics.cloud.cc.api.manageusers.CcUser;
 import org.trustedanalytics.cloud.cc.api.manageusers.CcUsersList;
 import org.trustedanalytics.cloud.cc.api.manageusers.Role;
 import org.trustedanalytics.cloud.cc.api.manageusers.User;
@@ -26,6 +30,8 @@ import org.trustedanalytics.cloud.cc.api.resources.CcServiceBindingResource;
 import org.trustedanalytics.cloud.cc.api.resources.CcServiceResource;
 import org.trustedanalytics.cloud.cc.api.resources.CcSpaceResource;
 import org.trustedanalytics.cloud.cc.api.resources.CcUserResource;
+import org.trustedanalytics.cloud.cc.api.resources.CcQuotaResource;
+import org.trustedanalytics.cloud.cc.api.resources.CcBuildpacksResource;
 
 import com.google.common.collect.ImmutableMap;
 
@@ -63,6 +69,8 @@ public class FeignClient implements CcOperations {
     private final CcServiceBindingResource serviceBindingResource;
     private final CcSpaceResource spaceResource;
     private final CcUserResource userResource;
+    private final CcBuildpacksResource buildpackResource;
+    private final CcQuotaResource quotaResource;
 
     /**
      * Creates client applying default configuration
@@ -87,16 +95,20 @@ public class FeignClient implements CcOperations {
         Objects.requireNonNull(url);
         Objects.requireNonNull(customizations);
 
+        final ObjectMapper mapper = new ObjectMapper();
+        mapper.disable(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES);
+        mapper.setPropertyNamingStrategy(new LowerCaseWithUnderscoresStrategy());
+
         // avoid duplication of slashes
         final String targetUrl = StringUtils.removeEnd(url, "/");
 
         // first applies defaults and then custom configuration
         final Builder builder = customizations.apply(Feign.builder()
                 .encoder(new JacksonEncoder())
-                .decoder(new JacksonDecoder())
+                .decoder(new JacksonDecoder(mapper))
                 .options(new Request.Options(CONNECT_TIMEOUT, READ_TIMEOUT))
                 .logger(new ScramblingSlf4jLogger(FeignClient.class))
-                .logLevel(feign.Logger.Level.FULL));
+                .logLevel(feign.Logger.Level.BASIC));
 
         this.applicationResource = builder.target(CcApplicationResource.class, targetUrl);
         this.organizationResource = builder.target(CcOrganizationResource.class, targetUrl);
@@ -104,6 +116,8 @@ public class FeignClient implements CcOperations {
         this.serviceBindingResource = builder.target(CcServiceBindingResource.class, targetUrl);
         this.spaceResource = builder.target(CcSpaceResource.class, targetUrl);
         this.userResource = builder.target(CcUserResource.class, targetUrl);
+        this.buildpackResource = builder.target(CcBuildpacksResource.class, targetUrl);
+        this.quotaResource = builder.target(CcQuotaResource.class, targetUrl);
     }
 
     @Override public CcAppSummary getAppSummary(UUID app) {
@@ -293,7 +307,8 @@ public class FeignClient implements CcOperations {
     }
 
     @Override public Collection<User> getOrgUsers(UUID orgGuid, Role role) {
-        return toUsers(organizationResource.getOrganizationUsers(orgGuid, role.getValue()), role);
+        return toUsers((Observable.defer(() -> concatPages(organizationResource.getOrganizationUsers(orgGuid,role.getValue()),
+                organizationResource::getOrganizationUsers))), role);
     }
 
     @Override public Collection<User> getSpaceUsers(UUID spaceGuid, Role role) {
@@ -325,6 +340,10 @@ public class FeignClient implements CcOperations {
             .map(ccUser -> new User(ccUser.getUsername(), ccUser.getGuid(), role))
             .collect(Collectors.toList());
     }
+    
+    private Collection<User> toUsers(Observable<CcUser> ccUsers, Role role) {
+        return ccUsers.map(ccUser -> new User(ccUser.getUsername(), ccUser.getGuid(), role)).toList().toBlocking().first();
+    }
 
     @Override public void switchApp(UUID app, CcAppStatus appStatus) {
         applicationResource.switchApp(app, appStatus);
@@ -332,5 +351,25 @@ public class FeignClient implements CcOperations {
 
     @Override public Observable<CcAppEnv> getAppEnv(UUID appUUID) {
         return Observable.defer(() -> Observable.just(new CcAppEnv(applicationResource.getAppEnv(appUUID))));
+    }
+
+    @Override public Observable<CcMemoryUsage> getMemoryUsage(UUID orgGuid) {
+        return Observable.defer(() -> Observable.just(organizationResource.getMemoryUsage(orgGuid)));
+    }
+
+    @Override public Observable<CcQuota> getQuota() {
+        return Observable.defer(() -> concatPages(quotaResource.getQuota(),
+            quotaResource::getQuota));
+    }
+
+    @Override
+    public Observable<CcBuildpack> getBuildpacks() {
+        return Observable.defer(() -> concatPages(buildpackResource.getBuildpacks(),
+            buildpackResource::getBuildpacks));
+    }
+
+    @Override
+    public Observable<CcOrgSummary> getOrgSummary(UUID orgGuid) {
+        return Observable.defer(() -> Observable.just(organizationResource.getOrganizationSummary(orgGuid)));
     }
 }

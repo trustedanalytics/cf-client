@@ -15,25 +15,31 @@
  */
 package org.trustedanalytics.cloud.cc.api;
 
-import rx.Observable;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.UUID;
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class CcQuota {
 
-public interface CcOperationsCommon {
-    /**
-     * Returns summary for space identified by given UUID
-     * @param spaceGuid space UUID
-     * @return space summary
-     */
-    CcSummary getSpaceSummary(UUID spaceGuid);
+    @JsonProperty("metadata")
+    private CcMetadata metadata;
 
-    /**
-     * Returns buildpacks
-     */
-    Observable<CcBuildpack> getBuildpacks();
+    @JsonProperty("entity")
+    private CcQuotaEntity entity;
 
-    /**
-     * Get quota
-     */
-    Observable<CcQuota> getQuota();
+    public CcQuotaEntity getEntity() {
+        return entity;
+    }
+
+    public void setEntity(CcQuotaEntity entity) {
+        this.entity = entity;
+    }
+
+    public CcMetadata getMetadata() {
+        return metadata;
+    }
+
+    public void setMetadata(CcMetadata metadata) {
+        this.metadata = metadata;
+    }
 }

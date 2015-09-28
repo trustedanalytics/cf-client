@@ -15,25 +15,9 @@
  */
 package org.trustedanalytics.cloud.cc.api;
 
-import rx.Observable;
+import lombok.Data;
 
-import java.util.UUID;
-
-public interface CcOperationsCommon {
-    /**
-     * Returns summary for space identified by given UUID
-     * @param spaceGuid space UUID
-     * @return space summary
-     */
-    CcSummary getSpaceSummary(UUID spaceGuid);
-
-    /**
-     * Returns buildpacks
-     */
-    Observable<CcBuildpack> getBuildpacks();
-
-    /**
-     * Get quota
-     */
-    Observable<CcQuota> getQuota();
+@Data
+public class CcMemoryUsage {
+    private int memoryUsageInMb;
 }

@@ -15,10 +15,12 @@
  */
 package org.trustedanalytics.cloud.cc.api.resources;
 
+import org.trustedanalytics.cloud.cc.api.CcOrgSummary;
+import org.trustedanalytics.cloud.cc.api.CcMemoryUsage;
 import org.trustedanalytics.cloud.cc.api.CcOrg;
 import org.trustedanalytics.cloud.cc.api.CcSpace;
 import org.trustedanalytics.cloud.cc.api.Page;
-import org.trustedanalytics.cloud.cc.api.manageusers.CcUsersList;
+import org.trustedanalytics.cloud.cc.api.manageusers.CcUser;
 
 import feign.Body;
 import feign.Headers;
@@ -49,11 +51,14 @@ public interface CcOrganizationResource {
     @RequestLine("GET /v2/organizations")
     Page<CcOrg> getOrgs();
 
-    @RequestLine(("GET"))
+    @RequestLine("GET")
     Page<CcOrg> getOrgs(URI nextPageUrl);
+    
+    @RequestLine("GET")
+    Page<CcUser> getOrganizationUsers(URI nextPageUrl);
 
     @RequestLine("GET /v2/organizations/{org}/{role}")
-    CcUsersList getOrganizationUsers(@Param("org") UUID org, @Param("role") String role);
+    Page<CcUser> getOrganizationUsers(@Param("org") UUID org, @Param("role") String role);
 
     @RequestLine("PUT /v2/organizations/{org}/users/{user}")
     void associateUserWithOrganization(@Param("org") UUID org, @Param("user") UUID user);
@@ -69,4 +74,10 @@ public interface CcOrganizationResource {
 
     @RequestLine("GET /v2/organizations/{org}/spaces?inline-relations-depth=1")
     Page<CcSpace> getSpacesForOrganization(@Param("org") UUID org);
+
+    @RequestLine("GET /v2/organizations/{org}/memory_usage")
+    CcMemoryUsage getMemoryUsage(@Param("org") UUID org);
+
+    @RequestLine("GET /v2/organizations/{org}/summary")
+    CcOrgSummary getOrganizationSummary(@Param("org") UUID org);
 }

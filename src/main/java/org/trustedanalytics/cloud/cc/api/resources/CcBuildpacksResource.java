@@ -13,27 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.trustedanalytics.cloud.cc.api;
+package org.trustedanalytics.cloud.cc.api.resources;
 
-import rx.Observable;
+import org.trustedanalytics.cloud.cc.api.CcBuildpack;
+import feign.Headers;
+import feign.RequestLine;
+import org.trustedanalytics.cloud.cc.api.Page;
 
-import java.util.UUID;
+import java.net.URI;
 
-public interface CcOperationsCommon {
-    /**
-     * Returns summary for space identified by given UUID
-     * @param spaceGuid space UUID
-     * @return space summary
-     */
-    CcSummary getSpaceSummary(UUID spaceGuid);
+@Headers("Accept: application/json")
+public interface CcBuildpacksResource {
 
-    /**
-     * Returns buildpacks
-     */
-    Observable<CcBuildpack> getBuildpacks();
+    @RequestLine("GET /v2/buildpacks")
+    Page<CcBuildpack> getBuildpacks();
 
-    /**
-     * Get quota
-     */
-    Observable<CcQuota> getQuota();
+    @RequestLine("GET")
+    Page<CcBuildpack> getBuildpacks(URI nextPageUrl);
 }
