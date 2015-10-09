@@ -23,42 +23,14 @@ import java.util.UUID;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CcExtendedServicePlanEntity {
+public class CcServiceKeyEntity {
 
-    @JsonProperty("name")
     private String name;
 
-    @JsonProperty("free")
-    private Boolean free;
+    private Object credentials;
 
-    @JsonProperty("description")
-    private String description;
+    @JsonProperty("service_instance_guid")
+    private UUID serviceInstanceGuid;
 
-    @JsonProperty("service_guid")
-    private UUID serviceGuid;
-
-    @JsonProperty("extra")
-    private String extra;
-
-    @JsonProperty("unique_id")
-    private String uniqueId;
-
-    @JsonProperty("public")
-    private Boolean publicStatus;
-
-    @JsonProperty("active")
-    private Boolean active;
-
-    @JsonProperty("service_url")
-    private String serviceUrl;
-
-    @JsonProperty("service")
-    private CcExtendedService service;
-
-    @JsonProperty("service_instances_url")
-    private String serviceInstancesUrl;
-
-    @JsonProperty("metadata")
-    private CcMetadata metadata;
 
 }

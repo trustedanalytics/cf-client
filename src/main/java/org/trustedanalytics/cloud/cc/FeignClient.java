@@ -23,6 +23,8 @@ import org.trustedanalytics.cloud.cc.api.manageusers.CcUser;
 import org.trustedanalytics.cloud.cc.api.manageusers.CcUsersList;
 import org.trustedanalytics.cloud.cc.api.manageusers.Role;
 import org.trustedanalytics.cloud.cc.api.manageusers.User;
+import org.trustedanalytics.cloud.cc.api.queries.Filter;
+import org.trustedanalytics.cloud.cc.api.queries.FilterOperator;
 import org.trustedanalytics.cloud.cc.api.queries.FilterQuery;
 import org.trustedanalytics.cloud.cc.api.resources.CcApplicationResource;
 import org.trustedanalytics.cloud.cc.api.resources.CcOrganizationResource;
@@ -250,6 +252,18 @@ public class FeignClient implements CcOperations {
     }
 
     @Override
+    public Observable<CcExtendedServiceInstance> getExtendedServiceInstances(int depth) {
+        return Observable.defer(() -> concatPages(serviceResource.getExtendedServiceInstances(depth),
+            serviceResource::getExtendedServiceInstances));
+    }
+
+    @Override
+    public Observable<CcExtendedServiceInstance> getExtendedServiceInstances(FilterQuery filterQuery, int depth) {
+        return Observable.defer(() -> concatPages(serviceResource.getExtendedServiceInstances(filterQuery, depth),
+            serviceResource::getExtendedServiceInstances));
+    }
+
+    @Override
     public Observable<CcExtendedServicePlan> getExtendedServicePlans(UUID serviceGuid) {
         return Observable.defer(() -> concatPages(serviceResource.getExtendedServicePlans(serviceGuid),
             serviceResource::getExtendedServicePlans));
@@ -266,6 +280,15 @@ public class FeignClient implements CcOperations {
     @Override
     public CcServiceBindingList getServiceBindings(FilterQuery filterQuery) {
         return serviceBindingResource.getServiceBindings(filterQuery);
+    }
+
+    @Override public Observable<CcServiceKey> getServiceKeys() {
+        return Observable.defer(() -> concatPages(serviceResource.getServiceKeys(),
+            serviceResource::getServiceKeys));
+    }
+
+    @Override public Observable<CcServiceKey> createServiceKey(CcNewServiceKey serviceKey) {
+        return Observable.defer(() -> Observable.just(serviceResource.createServiceKey(serviceKey)));
     }
 
     @Override public Observable<CcExtendedServiceInstance> createServiceInstance(CcNewServiceInstance serviceInstance) {

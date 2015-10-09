@@ -17,9 +17,12 @@ package org.trustedanalytics.cloud.cc.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 
+import java.util.Collection;
 import java.util.UUID;
 
+@Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CcExtendedServiceInstanceEntity {
 
@@ -31,6 +34,9 @@ public class CcExtendedServiceInstanceEntity {
 
     @JsonProperty("service_plan_guid")
     private UUID servicePlanGuid;
+
+    @JsonProperty("service_plan")
+    private CcExtendedServicePlan servicePlan;
 
     @JsonProperty("space_guid")
     private UUID spaceGuid;
@@ -62,107 +68,7 @@ public class CcExtendedServiceInstanceEntity {
     @JsonProperty("service_keys_url")
     private String serviceKeysUrl;
 
-    public String getServiceKeysUrl() {
-        return serviceKeysUrl;
-    }
+    @JsonProperty("service_keys")
+    private Collection<CcServiceKey> serviceKeys;
 
-    public void setServiceKeysUrl(String serviceKeysUrl) {
-        this.serviceKeysUrl = serviceKeysUrl;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Object getCredentials() {
-        return credentials;
-    }
-
-    public void setCredentials(Object credentials) {
-        this.credentials = credentials;
-    }
-
-    public UUID getServicePlanGuid() {
-        return servicePlanGuid;
-    }
-
-    public void setServicePlanGuid(UUID servicePlanGuid) {
-        this.servicePlanGuid = servicePlanGuid;
-    }
-
-    public UUID getSpaceGuid() {
-        return spaceGuid;
-    }
-
-    public void setSpaceGuid(UUID spaceGuid) {
-        this.spaceGuid = spaceGuid;
-    }
-
-    public String getGatewayData() {
-        return gatewayData;
-    }
-
-    public void setGatewayData(String gatewayData) {
-        this.gatewayData = gatewayData;
-    }
-
-    public String getDashboardUrl() {
-        return dashboardUrl;
-    }
-
-    public void setDashboardUrl(String dashboardUrl) {
-        this.dashboardUrl = dashboardUrl;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public Object getLastOperation() {
-        return lastOperation;
-    }
-
-    public void setLastOperation(Object lastOperation) {
-        this.lastOperation = lastOperation;
-    }
-
-    public Object getTags() {
-        return tags;
-    }
-
-    public void setTags(Object tags) {
-        this.tags = tags;
-    }
-
-    public String getSpaceUrl() {
-        return spaceUrl;
-    }
-
-    public void setSpaceUrl(String spaceUrl) {
-        this.spaceUrl = spaceUrl;
-    }
-
-    public String getServicePlanUrl() {
-        return servicePlanUrl;
-    }
-
-    public void setServicePlanUrl(String servicePlanUrl) {
-        this.servicePlanUrl = servicePlanUrl;
-    }
-
-    public String getServiceBindingsUrl() {
-        return serviceBindingsUrl;
-    }
-
-    public void setServiceBindingsUrl(String serviceBindingsUrl) {
-        this.serviceBindingsUrl = serviceBindingsUrl;
-    }
 }

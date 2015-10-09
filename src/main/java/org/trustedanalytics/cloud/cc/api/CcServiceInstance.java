@@ -20,11 +20,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 
 import java.util.Optional;
 import java.util.UUID;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Data
 public class CcServiceInstance {
 
     private UUID guid;
@@ -55,46 +57,6 @@ public class CcServiceInstance {
         plan.setService(service);
 
         this.servicePlan = plan;
-    }
-
-    public UUID getGuid() {
-        return guid;
-    }
-
-    public void setGuid(UUID guid) {
-        this.guid = guid;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public CcServicePlan getServicePlan() {
-        return servicePlan;
-    }
-
-    public void setServicePlan(CcServicePlan servicePlan) {
-        this.servicePlan = servicePlan;
-    }
-
-    public String getDashboardUrl() {
-        return dashboardUrl;
-    }
-
-    public void setDashboardUrl(String dashboardUrl) {
-        this.dashboardUrl = dashboardUrl;
-    }
-
-    public int getBoundAppCount() {
-        return boundAppCount;
-    }
-
-    public void setBoundAppCount(int boundAppCount) {
-        this.boundAppCount = boundAppCount;
     }
 
     @JsonIgnore

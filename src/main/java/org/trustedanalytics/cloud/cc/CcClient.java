@@ -15,26 +15,53 @@
  */
 package org.trustedanalytics.cloud.cc;
 
-import com.google.common.collect.ImmutableMap;
-import org.trustedanalytics.cloud.cc.api.manageusers.CcUsersList;
-import org.trustedanalytics.cloud.cc.api.manageusers.Role;
-import org.trustedanalytics.cloud.cc.api.manageusers.User;
-import org.trustedanalytics.cloud.cc.api.queries.FilterQuery;
+import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.toList;
 
+import com.google.common.collect.ImmutableMap;
 import org.cloudfoundry.client.lib.util.CloudEntityResourceMapper;
 import org.cloudfoundry.client.lib.util.JsonUtil;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestOperations;
-import org.trustedanalytics.cloud.cc.api.*;
+import org.trustedanalytics.cloud.cc.api.CcAppEnv;
+import org.trustedanalytics.cloud.cc.api.CcAppStatus;
+import org.trustedanalytics.cloud.cc.api.CcAppSummary;
+import org.trustedanalytics.cloud.cc.api.CcBuildpack;
+import org.trustedanalytics.cloud.cc.api.CcExtendedService;
+import org.trustedanalytics.cloud.cc.api.CcExtendedServiceInstance;
+import org.trustedanalytics.cloud.cc.api.CcExtendedServicePlan;
+import org.trustedanalytics.cloud.cc.api.CcMemoryUsage;
+import org.trustedanalytics.cloud.cc.api.CcNewServiceBinding;
+import org.trustedanalytics.cloud.cc.api.CcNewServiceInstance;
+import org.trustedanalytics.cloud.cc.api.CcNewServiceKey;
+import org.trustedanalytics.cloud.cc.api.CcOperations;
+import org.trustedanalytics.cloud.cc.api.CcOrg;
+import org.trustedanalytics.cloud.cc.api.CcOrgPermission;
+import org.trustedanalytics.cloud.cc.api.CcOrgSummary;
+import org.trustedanalytics.cloud.cc.api.CcOrgsList;
+import org.trustedanalytics.cloud.cc.api.CcQuota;
+import org.trustedanalytics.cloud.cc.api.CcServiceBinding;
+import org.trustedanalytics.cloud.cc.api.CcServiceBindingList;
+import org.trustedanalytics.cloud.cc.api.CcServiceKey;
+import org.trustedanalytics.cloud.cc.api.CcSpace;
+import org.trustedanalytics.cloud.cc.api.CcSpacesList;
+import org.trustedanalytics.cloud.cc.api.CcSummary;
+import org.trustedanalytics.cloud.cc.api.Page;
+import org.trustedanalytics.cloud.cc.api.manageusers.CcUsersList;
+import org.trustedanalytics.cloud.cc.api.manageusers.Role;
+import org.trustedanalytics.cloud.cc.api.manageusers.User;
+import org.trustedanalytics.cloud.cc.api.queries.FilterQuery;
 import rx.Observable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
-
-import static java.util.Arrays.asList;
-import static java.util.stream.Collectors.toList;
 
 /**
  * Prefer using {@link FeignClient} implementation in case of
@@ -306,6 +333,15 @@ public class CcClient implements CcOperations {
         throw new UnsupportedOperationException("Use: " + FeignClient.class.getName());
     }
 
+    @Override public Observable<CcExtendedServiceInstance> getExtendedServiceInstances(int depth) {
+        throw new UnsupportedOperationException("Use: " + FeignClient.class.getName());
+    }
+
+    @Override public Observable<CcExtendedServiceInstance> getExtendedServiceInstances(
+        FilterQuery filterQuery, int depth) {
+        throw new UnsupportedOperationException("Use: " + FeignClient.class.getName());
+    }
+
     @Override
     public Observable<CcMemoryUsage> getMemoryUsage(UUID orgGuid) {
         throw new UnsupportedOperationException("Use: " + FeignClient.class.getName());
@@ -347,6 +383,14 @@ public class CcClient implements CcOperations {
         String servicePath = "/v2/service_bindings?q={query}";
         Map<String, Object> pathVars = ImmutableMap.of("query", filterQuery.format());
         return template.getForEntity(baseUrl + servicePath, CcServiceBindingList.class, pathVars).getBody();
+    }
+
+    @Override public Observable<CcServiceKey> getServiceKeys() {
+        throw new UnsupportedOperationException("Use: " + FeignClient.class.getName());
+    }
+
+    @Override public Observable<CcServiceKey> createServiceKey(CcNewServiceKey serviceKey) {
+        throw new UnsupportedOperationException("Use: " + FeignClient.class.getName());
     }
 
     @Override public Observable<CcExtendedServiceInstance> createServiceInstance(

@@ -21,6 +21,8 @@ import feign.RequestLine;
 
 import org.trustedanalytics.cloud.cc.api.CcExtendedService;
 import org.trustedanalytics.cloud.cc.api.CcExtendedServicePlan;
+import org.trustedanalytics.cloud.cc.api.CcNewServiceKey;
+import org.trustedanalytics.cloud.cc.api.CcServiceKey;
 import org.trustedanalytics.cloud.cc.api.Page;
 import org.trustedanalytics.cloud.cc.api.CcNewServiceInstance;
 import org.trustedanalytics.cloud.cc.api.CcExtendedServiceInstance;
@@ -52,7 +54,16 @@ public interface CcServiceResource {
     Page<CcExtendedServiceInstance> getExtendedServiceInstances();
 
     @RequestLine("GET /v2/service_instances?q={query}")
-    Page<CcExtendedServiceInstance> getExtendedServiceInstances(@Param(value = "query", expander = FilterExpander.class) FilterQuery query);
+    Page<CcExtendedServiceInstance> getExtendedServiceInstances(
+        @Param(value = "query", expander = FilterExpander.class) FilterQuery query);
+
+    @RequestLine("GET /v2/service_instances?q={query}&inline-relations-depth={depth}")
+    Page<CcExtendedServiceInstance> getExtendedServiceInstances(
+        @Param(value = "query", expander = FilterExpander.class) FilterQuery query,
+        @Param("depth") int depth);
+
+    @RequestLine("GET /v2/service_instances?inline-relations-depth={depth}")
+    Page<CcExtendedServiceInstance> getExtendedServiceInstances(@Param("depth") int depth);
 
     @RequestLine("GET")
     Page<CcExtendedServiceInstance> getExtendedServiceInstances(URI nextPageUrl);
@@ -62,4 +73,17 @@ public interface CcServiceResource {
 
     @RequestLine("DELETE /v2/service_instances/{instance}")
     void deleteServiceInstance(@Param("instance") UUID instance);
+
+    @RequestLine("GET /v2/service_keys")
+    Page<CcServiceKey> getServiceKeys();
+
+    @RequestLine("GET /v2/service_keys?q={query}")
+    Page<CcServiceKey> getServiceKeys(
+        @Param(value = "query", expander = FilterExpander.class) FilterQuery query);
+
+    @RequestLine("GET")
+    Page<CcServiceKey> getServiceKeys(URI nextPageUrl);
+
+    @RequestLine("POST /v2/service_keys")
+    CcServiceKey createServiceKey(CcNewServiceKey serviceKey);
 }

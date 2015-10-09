@@ -18,6 +18,7 @@ package org.trustedanalytics.cloud.cc.api;
 import org.trustedanalytics.cloud.cc.api.queries.FilterQuery;
 import rx.Observable;
 
+import java.util.Map;
 import java.util.UUID;
 
 public interface CcOperationsServices extends CcOperationsCommon {
@@ -66,6 +67,19 @@ public interface CcOperationsServices extends CcOperationsCommon {
     Observable<CcExtendedServiceInstance> getExtendedServiceInstances(FilterQuery filterQuery);
 
     /**
+     * @param depth how deep the relations should be resolved
+     * @return all service instances
+     */
+    Observable<CcExtendedServiceInstance> getExtendedServiceInstances(int depth);
+
+    /**
+     * @param filterQuery filter to use when requesting service instances
+     * @param depth how deep the relations should be resolved
+     * @return filtered service instances
+     */
+    Observable<CcExtendedServiceInstance> getExtendedServiceInstances(FilterQuery filterQuery, int depth);
+
+    /**
      * Deletes service instance identified by given GUID.
      * @param instanceGuid GUID
      */
@@ -77,4 +91,16 @@ public interface CcOperationsServices extends CcOperationsCommon {
      * @return matching service bindings
      */
     CcServiceBindingList getServiceBindings(FilterQuery filterQuery);
+
+    /**
+     * Returns a list of all service keys acessible to user
+     * @return list of service keys
+     */
+    Observable<CcServiceKey> getServiceKeys();
+
+    /**
+     * Creates a new service key
+     * @return Created service key
+     */
+    Observable<CcServiceKey> createServiceKey(CcNewServiceKey serviceKey);
 }
