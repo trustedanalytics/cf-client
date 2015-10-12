@@ -66,6 +66,6 @@ public interface CcSpaceResource {
     @RequestLine("GET /v2/spaces/{space}/services?inline-relations-depth=1")
     String getServices(@Param("space") UUID space);
 
-    @RequestLine("DELETE /v2/spaces/{space}")
+    @RequestLine("DELETE /v2/spaces/{space}?async=true&recursive=true")
     String removeSpace(@Param("space") UUID space);
 }

@@ -273,7 +273,7 @@ public class CcClient implements CcOperations {
 
     @Override
     public void deleteSpace(UUID spaceGuid) {
-        String removeSpacePath = "/v2/spaces/{space}";
+        String removeSpacePath = "/v2/spaces/{space}?async=true&recursive=true";
         Map<String, Object> pathVars = ImmutableMap.of(SPACE, spaceGuid.toString());
         template.delete(baseUrl + removeSpacePath, pathVars);
     }
