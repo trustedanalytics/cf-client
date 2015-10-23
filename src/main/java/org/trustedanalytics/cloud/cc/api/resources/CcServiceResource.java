@@ -36,7 +36,7 @@ import java.util.UUID;
 public interface CcServiceResource {
 
     @RequestLine("GET /v2/services/{service}?inline-relations-depth=1")
-    String getService(@Param("service") UUID service);
+    CcExtendedService getService(@Param("service") UUID service);
 
     @RequestLine("GET /v2/services")
     Page<CcExtendedService> getServices();

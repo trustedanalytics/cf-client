@@ -27,7 +27,7 @@ public interface CcOperationsServices extends CcOperationsCommon {
      * @param spaceGuid GUID
      * @return services
      */
-    String getServices(UUID spaceGuid);
+    Observable<CcExtendedService> getServices(UUID spaceGuid);
 
     /**
      * Returns services
@@ -46,7 +46,7 @@ public interface CcOperationsServices extends CcOperationsCommon {
      * @param serviceGuid GUID
      * @return service
      */
-    String getService(UUID serviceGuid);
+    Observable<CcExtendedService> getService(UUID serviceGuid);
 
     /**
      * Creates new service instance using provided configuration.

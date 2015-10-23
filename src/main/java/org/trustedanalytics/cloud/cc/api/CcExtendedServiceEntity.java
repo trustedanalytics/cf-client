@@ -18,6 +18,7 @@ package org.trustedanalytics.cloud.cc.api;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Collection;
 import java.util.UUID;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -73,6 +74,9 @@ public class CcExtendedServiceEntity {
 
     @JsonProperty("service_plans_url")
     private String servicePlansUrl;
+
+    @JsonProperty("service_plans")
+    private Collection<CcExtendedServicePlan> servicePlans;
 
     public String getLabel() {
         return label;

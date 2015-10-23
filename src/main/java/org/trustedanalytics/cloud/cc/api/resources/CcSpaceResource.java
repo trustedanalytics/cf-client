@@ -15,6 +15,7 @@
  */
 package org.trustedanalytics.cloud.cc.api.resources;
 
+import org.trustedanalytics.cloud.cc.api.CcExtendedService;
 import org.trustedanalytics.cloud.cc.api.CcSpace;
 import org.trustedanalytics.cloud.cc.api.CcSummary;
 import org.trustedanalytics.cloud.cc.api.Page;
@@ -64,7 +65,10 @@ public interface CcSpaceResource {
     void removeSpaceRoleFromUser(@Param("space") UUID space, @Param("user") UUID user, @Param("role") String role);
 
     @RequestLine("GET /v2/spaces/{space}/services?inline-relations-depth=1")
-    String getServices(@Param("space") UUID space);
+    Page<CcExtendedService> getServices(@Param("space") UUID space);
+
+    @RequestLine("GET")
+    Page<CcExtendedService> getServices(URI nextPageUrl);
 
     @RequestLine("DELETE /v2/spaces/{space}?async=true&recursive=true")
     String removeSpace(@Param("space") UUID space);

@@ -269,12 +269,14 @@ public class FeignClient implements CcOperations {
             serviceResource::getExtendedServicePlans));
     }
 
-    @Override public String getServices(UUID spaceGuid) {
-        return spaceResource.getServices(spaceGuid);
+    @Override
+    public Observable<CcExtendedService> getServices(UUID spaceGuid) {
+        return Observable.defer(() -> concatPages(spaceResource.getServices(spaceGuid),
+            spaceResource::getServices));
     }
 
-    @Override public String getService(UUID serviceGuid) {
-        return serviceResource.getService(serviceGuid);
+    @Override public Observable<CcExtendedService> getService(UUID serviceGuid) {
+        return Observable.defer(() -> Observable.just(serviceResource.getService(serviceGuid)));
     }
 
     @Override

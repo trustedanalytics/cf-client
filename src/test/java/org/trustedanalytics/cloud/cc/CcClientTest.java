@@ -255,26 +255,6 @@ import java.util.function.Supplier;
         sut.getSpaceSummary(null);
     }
 
-    @Test public void getService_correctData_correctRestParams() {
-        String apiUrl = BASE_URL + "/v2/services/{service}?inline-relations-depth=1";
-        verifyGetForEntity(sut::getService, apiUrl, String.class);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void getService_emptyGUID_returnIllegalArgumentException() {
-        sut.getService(null);
-    }
-
-    @Test public void getServices_correctData_correctRestParams() {
-        String apiUrl = BASE_URL + "/v2/spaces/{space}/services?inline-relations-depth=1";
-        verifyGetForEntity(sut::getServices, apiUrl, String.class);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void getServices_emptyGUID_returnIllegalArgumentException() {
-        sut.getServices(null);
-    }
-
     @Test public void createServiceInstance_correctData_correctRestParams() {
         CcNewServiceInstance serviceInstance = mock(CcNewServiceInstance.class);
         when(serviceInstance.getName()).thenReturn("");

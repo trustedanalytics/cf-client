@@ -170,7 +170,8 @@ public class CcClient implements CcOperations {
         }
         String orgsPath = URL_V2_ORGANIZATIONS_ORG;
         Map<String, Object> pathVars = ImmutableMap.of("org", org.toString());
-        return Observable.defer(() -> Observable.just(template.getForEntity(baseUrl + orgsPath, CcOrg.class, pathVars).getBody()));
+        return Observable.defer(() -> Observable.just(
+            template.getForEntity(baseUrl + orgsPath, CcOrg.class, pathVars).getBody()));
     }
 
     @Override
@@ -210,15 +211,20 @@ public class CcClient implements CcOperations {
         }
         String spacePath = "/v2/spaces/{space}";
         Map<String, Object> pathVars = ImmutableMap.of(SPACE, spaceId.toString());
-        return Observable.defer(() -> Observable.just(template.getForEntity(baseUrl + spacePath, CcSpace.class, pathVars).getBody()));
+        return Observable.defer(() -> Observable
+            .just(template.getForEntity(baseUrl + spacePath, CcSpace.class, pathVars).getBody()));
     }
 
     @Override public Observable<CcSpace> getSpaces(UUID org) {
         String spacesPath = "/v2/organizations/{org}/spaces?inline-relations-depth=1";
         Map<String, Object> pathVars = ImmutableMap.of("org", org.toString());
         return Observable.defer(() ->
-            concatPages(getForEntity(baseUrl + spacesPath, new ParameterizedTypeReference<Page<CcSpace>>() {}, pathVars),
-                nextUrl -> getForEntity(baseUrl + nextUrl, new ParameterizedTypeReference<Page<CcSpace>>() {}, pathVars)));
+            concatPages(
+                getForEntity(baseUrl + spacesPath, new ParameterizedTypeReference<Page<CcSpace>>() {
+                }, pathVars),
+                nextUrl -> getForEntity(baseUrl + nextUrl,
+                    new ParameterizedTypeReference<Page<CcSpace>>() {
+                    }, pathVars)));
     }
 
     @Override public Collection<CcOrg> getManagedOrganizations(UUID userId) {
@@ -307,20 +313,18 @@ public class CcClient implements CcOperations {
         return template.getForEntity(baseUrl + path, CcSummary.class, pathVars).getBody();
     }
 
-    @Override public Observable<CcExtendedService> getExtendedServices() {
-        return Observable.defer(() ->
-            concatPages(getForEntity(baseUrl + "/v2/services", new ParameterizedTypeReference<Page<CcExtendedService>>() {}),
-                nextUrl -> getForEntity(baseUrl + nextUrl, new ParameterizedTypeReference<Page<CcExtendedService>>() {})));
+    @Override public Observable<CcExtendedService> getServices(UUID spaceGuid) {
+        throw new UnsupportedOperationException("Use: " + FeignClient.class.getName());
     }
 
-    @Override public String getServices(UUID spaceGuid) {
-        if (spaceGuid == null) {
-            throw new IllegalArgumentException(GUID_MUST_BE_NOT_NULL);
-        }
-
-        String servicesPath = "/v2/spaces/{space}/services?inline-relations-depth=1";
-        Map<String, Object> pathVars = ImmutableMap.of(SPACE, spaceGuid.toString());
-        return template.getForEntity(baseUrl + servicesPath, String.class, pathVars).getBody();
+    @Override public Observable<CcExtendedService> getExtendedServices() {
+        return Observable.defer(() ->
+            concatPages(getForEntity(baseUrl + "/v2/services",
+                new ParameterizedTypeReference<Page<CcExtendedService>>() {
+                }),
+                nextUrl -> getForEntity(baseUrl + nextUrl,
+                    new ParameterizedTypeReference<Page<CcExtendedService>>() {
+                    })));
     }
 
     @Override
@@ -364,18 +368,16 @@ public class CcClient implements CcOperations {
         String spacesPath = "/v2/services/{service}/service_plans";
         Map<String, Object> pathVars = ImmutableMap.of("service", serviceGuid.toString());
         return Observable.defer(() ->
-            concatPages(getForEntity(baseUrl + spacesPath, new ParameterizedTypeReference<Page<CcExtendedServicePlan>>() {}, pathVars),
-                nextUrl -> getForEntity(baseUrl + nextUrl, new ParameterizedTypeReference<Page<CcExtendedServicePlan>>() {}, pathVars)));
+            concatPages(getForEntity(baseUrl + spacesPath,
+                new ParameterizedTypeReference<Page<CcExtendedServicePlan>>() {
+                }, pathVars),
+                nextUrl -> getForEntity(baseUrl + nextUrl,
+                    new ParameterizedTypeReference<Page<CcExtendedServicePlan>>() {
+                    }, pathVars)));
     }
 
-    @Override public String getService(UUID serviceGuid) {
-        if (serviceGuid == null) {
-            throw new IllegalArgumentException(GUID_MUST_BE_NOT_NULL);
-        }
-
-        String servicePath = "/v2/services/{service}?inline-relations-depth=1";
-        Map<String, Object> pathVars = ImmutableMap.of("service", serviceGuid.toString());
-        return template.getForEntity(baseUrl + servicePath, String.class, pathVars).getBody();
+    @Override public Observable<CcExtendedService> getService(UUID serviceGuid) {
+        throw new UnsupportedOperationException("Use: " + FeignClient.class.getName());
     }
 
     @Override
