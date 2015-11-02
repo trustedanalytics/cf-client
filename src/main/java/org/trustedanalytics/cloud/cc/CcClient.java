@@ -473,7 +473,7 @@ public class CcClient implements CcOperations {
         String path = "/v2/apps/{app}";
         Map<String, String> pathVars = ImmutableMap.of("app", app.toString());
         Map<String, Object> serviceRequest = new HashMap<String, Object>();
-        serviceRequest.put("state", appStatus.getName());
+        serviceRequest.put("state", appStatus.getState());
         template.put(baseUrl + path, serviceRequest, pathVars);
     }
 

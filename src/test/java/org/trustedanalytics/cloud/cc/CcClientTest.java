@@ -325,7 +325,7 @@ import java.util.function.Supplier;
         Map<String, Object> serviceRequest = new HashMap<String, Object>();
         CcAppState state = CcAppState.STARTED;
         CcAppStatus status = new CcAppStatus(state);
-        serviceRequest.put("state", status.getName());
+        serviceRequest.put("state", status.getState());
         sut.switchApp(guid, status);
         verify(template).put(eq(apiUrl), eq(serviceRequest), anyMapOf(String.class, String.class));
     }
@@ -336,7 +336,7 @@ import java.util.function.Supplier;
         Map<String, Object> serviceRequest = new HashMap<String, Object>();
         CcAppState state = CcAppState.STOPPED;
         CcAppStatus status = new CcAppStatus(state);
-        serviceRequest.put("state", status.getName());
+        serviceRequest.put("state", status.getState());
         sut.switchApp(guid, status);
         verify(template).put(eq(apiUrl), eq(serviceRequest), anyMapOf(String.class, String.class));
     }

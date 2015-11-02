@@ -20,21 +20,21 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CcAppStatus {
 
-    private CcAppState name;
+    private CcAppState state;
 
     public CcAppStatus() {
     }
 
-    public CcAppStatus(CcAppState name) {
-        this.name = name;
+    public CcAppStatus(CcAppState state) {
+        this.state = state;
     }
 
-    public CcAppState getName() {
-        return name;
+    public CcAppState getState() {
+        return state;
     }
 
-    public void setName(CcAppState name) {
-        this.name = name;
+    public void setState(CcAppState state) {
+        this.state = state;
     }
 
 }
