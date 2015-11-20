@@ -103,4 +103,9 @@ public interface CcOperationsServices extends CcOperationsCommon {
      * @return Created service key
      */
     Observable<CcServiceKey> createServiceKey(CcNewServiceKey serviceKey);
+
+    /**
+     * Deletes given service key
+     */
+    void deleteServiceKey(UUID keyGuid);
 }

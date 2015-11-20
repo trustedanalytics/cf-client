@@ -86,4 +86,7 @@ public interface CcServiceResource {
 
     @RequestLine("POST /v2/service_keys")
     CcServiceKey createServiceKey(CcNewServiceKey serviceKey);
+
+    @RequestLine("DELETE /v2/service_keys/{key}")
+    void deleteServiceKey(@Param("key") UUID keyGuid);
 }

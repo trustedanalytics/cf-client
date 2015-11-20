@@ -293,6 +293,11 @@ public class FeignClient implements CcOperations {
         return Observable.defer(() -> Observable.just(serviceResource.createServiceKey(serviceKey)));
     }
 
+    @Override
+    public void deleteServiceKey(UUID keyGuid) {
+        serviceResource.deleteServiceKey(keyGuid);
+    }
+
     @Override public Observable<CcExtendedServiceInstance> createServiceInstance(CcNewServiceInstance serviceInstance) {
         return Observable.defer(() -> Observable.just(serviceResource.createServiceInstance(serviceInstance)));
     }

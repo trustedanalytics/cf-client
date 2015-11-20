@@ -395,6 +395,11 @@ public class CcClient implements CcOperations {
         throw new UnsupportedOperationException("Use: " + FeignClient.class.getName());
     }
 
+    @Override
+    public void deleteServiceKey(UUID keyGuid) {
+        throw new UnsupportedOperationException("Use: " + FeignClient.class.getName());
+    }
+
     @Override public Observable<CcExtendedServiceInstance> createServiceInstance(
         CcNewServiceInstance serviceInstance) {
 
