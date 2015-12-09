@@ -17,8 +17,6 @@ package org.trustedanalytics.cloud.cc.api;
 
 import org.trustedanalytics.cloud.cc.api.queries.FilterQuery;
 import rx.Observable;
-
-import java.util.Map;
 import java.util.UUID;
 
 public interface CcOperationsServices extends CcOperationsCommon {

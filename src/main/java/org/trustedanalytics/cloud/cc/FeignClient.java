@@ -23,8 +23,6 @@ import org.trustedanalytics.cloud.cc.api.manageusers.CcUser;
 import org.trustedanalytics.cloud.cc.api.manageusers.CcUsersList;
 import org.trustedanalytics.cloud.cc.api.manageusers.Role;
 import org.trustedanalytics.cloud.cc.api.manageusers.User;
-import org.trustedanalytics.cloud.cc.api.queries.Filter;
-import org.trustedanalytics.cloud.cc.api.queries.FilterOperator;
 import org.trustedanalytics.cloud.cc.api.queries.FilterQuery;
 import org.trustedanalytics.cloud.cc.api.resources.CcApplicationResource;
 import org.trustedanalytics.cloud.cc.api.resources.CcOrganizationResource;
@@ -337,8 +335,8 @@ public class FeignClient implements CcOperations {
     }
 
     @Override public Collection<User> getOrgUsers(UUID orgGuid, Role role) {
-        return toUsers((Observable.defer(() -> concatPages(organizationResource.getOrganizationUsers(orgGuid,role.getValue()),
-                organizationResource::getOrganizationUsers))), role);
+        return toUsers(Observable.defer(() -> concatPages(organizationResource.getOrganizationUsers(orgGuid,role.getValue()),
+                organizationResource::getOrganizationUsers)), role);
     }
 
     @Override public Collection<User> getSpaceUsers(UUID spaceGuid, Role role) {

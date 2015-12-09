@@ -81,6 +81,7 @@ public class CcClient implements CcOperations {
     private static final String SPACE = "space";
     private static final String ORGANIZATIONS = "organizations";
     private static final String URL_V2_ORGANIZATIONS_ORG =  "/v2/organizations/{org}";
+    private static final String UNSUPPORTED_OPERATION_MSG = "Use: ";
 
     private static Map<Role, String> roleMap;
 
@@ -314,7 +315,7 @@ public class CcClient implements CcOperations {
     }
 
     @Override public Observable<CcExtendedService> getServices(UUID spaceGuid) {
-        throw new UnsupportedOperationException("Use: " + FeignClient.class.getName());
+        throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG + FeignClient.class.getName());
     }
 
     @Override public Observable<CcExtendedService> getExtendedServices() {
@@ -329,38 +330,38 @@ public class CcClient implements CcOperations {
 
     @Override
     public Observable<CcExtendedServiceInstance> getExtendedServiceInstances() {
-        throw new UnsupportedOperationException("Use: " + FeignClient.class.getName());
+        throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG + FeignClient.class.getName());
     }
 
     @Override
     public Observable<CcExtendedServiceInstance> getExtendedServiceInstances(FilterQuery filterQuery) {
-        throw new UnsupportedOperationException("Use: " + FeignClient.class.getName());
+        throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG + FeignClient.class.getName());
     }
 
     @Override public Observable<CcExtendedServiceInstance> getExtendedServiceInstances(int depth) {
-        throw new UnsupportedOperationException("Use: " + FeignClient.class.getName());
+        throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG + FeignClient.class.getName());
     }
 
     @Override public Observable<CcExtendedServiceInstance> getExtendedServiceInstances(
         FilterQuery filterQuery, int depth) {
-        throw new UnsupportedOperationException("Use: " + FeignClient.class.getName());
+        throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG + FeignClient.class.getName());
     }
 
     @Override
     public Observable<CcMemoryUsage> getMemoryUsage(UUID orgGuid) {
-        throw new UnsupportedOperationException("Use: " + FeignClient.class.getName());
+        throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG + FeignClient.class.getName());
     }
 
     @Override public Observable<CcQuota> getQuota() {
-        throw new UnsupportedOperationException("Use: " + FeignClient.class.getName());
+        throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG + FeignClient.class.getName());
     }
 
     @Override public Observable<CcBuildpack> getBuildpacks() {
-        throw new UnsupportedOperationException("Use: " + FeignClient.class.getName());
+        throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG + FeignClient.class.getName());
     }
 
     @Override public Observable<CcOrgSummary> getOrgSummary(UUID orgGuid) {
-        throw new UnsupportedOperationException("Use: " + FeignClient.class.getName());
+        throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG + FeignClient.class.getName());
     }
 
     @Override
@@ -377,7 +378,7 @@ public class CcClient implements CcOperations {
     }
 
     @Override public Observable<CcExtendedService> getService(UUID serviceGuid) {
-        throw new UnsupportedOperationException("Use: " + FeignClient.class.getName());
+        throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG + FeignClient.class.getName());
     }
 
     @Override
@@ -388,16 +389,16 @@ public class CcClient implements CcOperations {
     }
 
     @Override public Observable<CcServiceKey> getServiceKeys() {
-        throw new UnsupportedOperationException("Use: " + FeignClient.class.getName());
+        throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG + FeignClient.class.getName());
     }
 
     @Override public Observable<CcServiceKey> createServiceKey(CcNewServiceKey serviceKey) {
-        throw new UnsupportedOperationException("Use: " + FeignClient.class.getName());
+        throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG + FeignClient.class.getName());
     }
 
     @Override
     public void deleteServiceKey(UUID keyGuid) {
-        throw new UnsupportedOperationException("Use: " + FeignClient.class.getName());
+        throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG + FeignClient.class.getName());
     }
 
     @Override public Observable<CcExtendedServiceInstance> createServiceInstance(
