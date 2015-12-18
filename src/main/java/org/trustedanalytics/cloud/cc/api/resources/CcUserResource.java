@@ -17,13 +17,17 @@ package org.trustedanalytics.cloud.cc.api.resources;
 
 import org.trustedanalytics.cloud.cc.api.CcOrgsList;
 import org.trustedanalytics.cloud.cc.api.CcSpacesList;
+import org.trustedanalytics.cloud.cc.api.Page;
+import org.trustedanalytics.cloud.cc.api.manageusers.CcOrgUser;
 import org.trustedanalytics.cloud.cc.api.manageusers.CcUser;
+import org.trustedanalytics.cloud.cc.api.manageusers.CcUsersCount;
 
 import feign.Body;
 import feign.Headers;
 import feign.Param;
 import feign.RequestLine;
 
+import java.net.URI;
 import java.util.UUID;
 
 @Headers("Accept: application/json")
@@ -31,7 +35,7 @@ public interface CcUserResource {
     @RequestLine("POST /v2/users")
     @Headers("Content-Type: application/json")
     @Body("%7B\"guid\":\"{user}\"%7D")
-    CcUser createUser(@Param("user") UUID user);
+    CcOrgUser createUser(@Param("user") UUID user);
 
     @RequestLine("GET /v2/users/{user}/{spaceType}?q=organization_guid:{org}")
     CcSpacesList getUserSpaces(@Param("user") UUID user, @Param("spaceType") String spaceType, @Param("org") UUID org);
@@ -47,6 +51,15 @@ public interface CcUserResource {
 
     @RequestLine("GET /v2/users/{user}/organizations")
     CcOrgsList getUserOrganizations(@Param("user") UUID user);
+
+    @RequestLine("GET /v2/users")
+    Page<CcUser> getUsers();
+
+    @RequestLine("GET")
+    Page<CcUser> getUsers(URI nextPageUrl);
+
+    @RequestLine("GET /v2/users")
+    CcUsersCount getUsersCount();
 
     @RequestLine("DELETE /v2/users/{user}")
     void deleteUser(@Param("user") UUID user);

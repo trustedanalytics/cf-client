@@ -15,55 +15,21 @@
  */
 package org.trustedanalytics.cloud.cc.api.manageusers;
 
-import java.util.List;
+import lombok.Data;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-
-@JsonIgnoreProperties(ignoreUnknown = true)
+@Data
 public class CcUserEntity {
 
-    private List<String> roles;
-
-    private String username;
-
-    @JsonProperty("admin")
     private boolean admin;
-
-    @JsonProperty("active")
     private boolean active;
-
-    public void setRoles(List<String> roles) {
-        this.roles = roles;
-    }
-
-    public List<String> getRoles() {
-        return roles;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public boolean isAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
+    private String username;
+    private String defaultSpaceGuid;
+    private String defaultSpaceUrl;
+    private String spacesUrl;
+    private String organizationsUrl;
+    private String managedOrganizationsUrl;
+    private String billingManagedOrganizationsUrl;
+    private String auditedOrganizationsUrl;
+    private String managedSpacesUrl;
+    private String auditedSpacesUrl;
 }

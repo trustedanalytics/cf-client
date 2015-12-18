@@ -19,8 +19,9 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy;
 import org.trustedanalytics.cloud.cc.api.loggers.ScramblingSlf4jLogger;
+import org.trustedanalytics.cloud.cc.api.manageusers.CcOrgUser;
 import org.trustedanalytics.cloud.cc.api.manageusers.CcUser;
-import org.trustedanalytics.cloud.cc.api.manageusers.CcUsersList;
+import org.trustedanalytics.cloud.cc.api.manageusers.CcOrgUsersList;
 import org.trustedanalytics.cloud.cc.api.manageusers.Role;
 import org.trustedanalytics.cloud.cc.api.manageusers.User;
 import org.trustedanalytics.cloud.cc.api.queries.FilterQuery;
@@ -96,7 +97,7 @@ public class FeignClient implements CcOperations {
         Objects.requireNonNull(customizations);
 
         final ObjectMapper mapper = new ObjectMapper();
-        mapper.disable(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES);
+        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         mapper.setPropertyNamingStrategy(new LowerCaseWithUnderscoresStrategy());
 
         // avoid duplication of slashes
@@ -363,13 +364,13 @@ public class FeignClient implements CcOperations {
         spaceResource.removeSpaceRoleFromUser(spaceId, userGuid, role.getValue());
     }
 
-    private Collection<User> toUsers(CcUsersList ccUsers, Role role) {
+    private Collection<User> toUsers(CcOrgUsersList ccUsers, Role role) {
         return ccUsers.getUsers().stream()
             .map(ccUser -> new User(ccUser.getUsername(), ccUser.getGuid(), role))
             .collect(Collectors.toList());
     }
     
-    private Collection<User> toUsers(Observable<CcUser> ccUsers, Role role) {
+    private Collection<User> toUsers(Observable<CcOrgUser> ccUsers, Role role) {
         return ccUsers.map(ccUser -> new User(ccUser.getUsername(), ccUser.getGuid(), role)).toList().toBlocking().first();
     }
 
@@ -399,5 +400,16 @@ public class FeignClient implements CcOperations {
     @Override
     public Observable<CcOrgSummary> getOrgSummary(UUID orgGuid) {
         return Observable.defer(() -> Observable.just(organizationResource.getOrganizationSummary(orgGuid)));
+    }
+
+    @Override
+    public Observable<CcUser> getUsers() {
+        return Observable.defer(() -> concatPages(userResource.getUsers(),
+            userResource::getUsers));
+    }
+
+    @Override
+    public Observable<Integer> getUsersCount() {
+        return Observable.defer(() -> Observable.just(userResource.getUsersCount().getTotalResults()));
     }
 }

@@ -13,30 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.trustedanalytics.cloud.cc.api;
+package org.trustedanalytics.cloud.cc.api.manageusers;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.trustedanalytics.cloud.cc.api.CcMetadata;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CcSpace {
+public class CcOrgUser {
 
     private CcMetadata metadata;
-    private CcSpaceEntity entity;
+    private CcOrgUserEntity entity;
 
-    public CcSpace() {
+    public CcOrgUser() {
     }
 
-    public CcSpace(UUID guid, String name, UUID orgGuid) {
+    public CcOrgUser(UUID guid, String username, String role) {
         CcMetadata meta = new CcMetadata();
         meta.setGuid(guid.toString());
         metadata = meta;
-        CcSpaceEntity ent = new CcSpaceEntity();
-        ent.setName(name);
-        ent.setOrgGuid(orgGuid);
+        CcOrgUserEntity ent = new CcOrgUserEntity();
+        ent.setUsername(username);
+        List<String> roleList = new ArrayList<>();
+        roleList.add(role);
+        ent.setRoles(roleList);
         entity = ent;
     }
 
@@ -48,29 +53,24 @@ public class CcSpace {
         this.metadata = metadata;
     }
 
-    public CcSpaceEntity getEntity() {
+    public CcOrgUserEntity getEntity() {
         return entity;
     }
 
-    public void setEntity(CcSpaceEntity entity) {
+    public void setEntity(CcOrgUserEntity entity) {
         this.entity = entity;
     }
 
     @JsonIgnore
     public UUID getGuid() {
-        Optional<CcSpace> space = Optional.of(this);
-        return UUID.fromString(space.map(CcSpace::getMetadata).map(CcMetadata::getGuid).orElse(null));
+        Optional<CcOrgUser> user = Optional.of(this);
+        return UUID.fromString(user.map(CcOrgUser::getMetadata).map(CcMetadata::getGuid).orElse(null));
     }
 
     @JsonIgnore
-    public String getName() {
-        Optional<CcSpace> space = Optional.of(this);
-        return space.map(CcSpace::getEntity).map(CcSpaceEntity::getName).orElse(null);
+    public String getUsername() {
+        Optional<CcOrgUser> user = Optional.of(this);
+        return user.map(CcOrgUser::getEntity).map(CcOrgUserEntity::getUsername).orElse(null);
     }
 
-    @JsonIgnore
-    public UUID getOrgGuid() {
-        Optional<CcSpace> space = Optional.of(this);
-        return space.map(CcSpace::getEntity).map(CcSpaceEntity::getOrgGuid).orElse(null);
-    }
 }

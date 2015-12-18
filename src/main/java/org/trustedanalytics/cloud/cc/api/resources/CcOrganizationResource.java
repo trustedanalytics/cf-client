@@ -20,7 +20,7 @@ import org.trustedanalytics.cloud.cc.api.CcMemoryUsage;
 import org.trustedanalytics.cloud.cc.api.CcOrg;
 import org.trustedanalytics.cloud.cc.api.CcSpace;
 import org.trustedanalytics.cloud.cc.api.Page;
-import org.trustedanalytics.cloud.cc.api.manageusers.CcUser;
+import org.trustedanalytics.cloud.cc.api.manageusers.CcOrgUser;
 
 import feign.Body;
 import feign.Headers;
@@ -55,10 +55,10 @@ public interface CcOrganizationResource {
     Page<CcOrg> getOrgs(URI nextPageUrl);
     
     @RequestLine("GET")
-    Page<CcUser> getOrganizationUsers(URI nextPageUrl);
+    Page<CcOrgUser> getOrganizationUsers(URI nextPageUrl);
 
     @RequestLine("GET /v2/organizations/{org}/{role}")
-    Page<CcUser> getOrganizationUsers(@Param("org") UUID org, @Param("role") String role);
+    Page<CcOrgUser> getOrganizationUsers(@Param("org") UUID org, @Param("role") String role);
 
     @RequestLine("PUT /v2/organizations/{org}/users/{user}")
     void associateUserWithOrganization(@Param("org") UUID org, @Param("user") UUID user);

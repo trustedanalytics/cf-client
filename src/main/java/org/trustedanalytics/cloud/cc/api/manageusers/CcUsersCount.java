@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.trustedanalytics.cloud.cc.api;
+package org.trustedanalytics.cloud.cc.api.manageusers;
 
 import lombok.Data;
 
 @Data
-public class CcMetadata {
+public class CcUsersCount {
 
-    private String guid;
+    private int totalResults;
 }

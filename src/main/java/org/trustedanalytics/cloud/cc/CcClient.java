@@ -48,7 +48,8 @@ import org.trustedanalytics.cloud.cc.api.CcSpace;
 import org.trustedanalytics.cloud.cc.api.CcSpacesList;
 import org.trustedanalytics.cloud.cc.api.CcSummary;
 import org.trustedanalytics.cloud.cc.api.Page;
-import org.trustedanalytics.cloud.cc.api.manageusers.CcUsersList;
+import org.trustedanalytics.cloud.cc.api.manageusers.CcUser;
+import org.trustedanalytics.cloud.cc.api.manageusers.CcOrgUsersList;
 import org.trustedanalytics.cloud.cc.api.manageusers.Role;
 import org.trustedanalytics.cloud.cc.api.manageusers.User;
 import org.trustedanalytics.cloud.cc.api.queries.FilterQuery;
@@ -364,6 +365,14 @@ public class CcClient implements CcOperations {
         throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG + FeignClient.class.getName());
     }
 
+    @Override public Observable<CcUser> getUsers() {
+        throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG + FeignClient.class.getName());
+    }
+
+    @Override public Observable<Integer> getUsersCount() {
+        throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG + FeignClient.class.getName());
+    }
+
     @Override
     public Observable<CcExtendedServicePlan> getExtendedServicePlans(UUID serviceGuid) {
         String spacesPath = "/v2/services/{service}/service_plans";
@@ -549,7 +558,7 @@ public class CcClient implements CcOperations {
 
     private Collection<User> getUsers(UUID guid, Role role, String type) {
         return template
-            .getForObject(baseUrl + "/v2/" + type + "/{guid}/" + role.getValue(), CcUsersList.class,
+            .getForObject(baseUrl + "/v2/" + type + "/{guid}/" + role.getValue(), CcOrgUsersList.class,
                 guid).getUsers().stream().map(
                 cfUser -> new User(cfUser.getUsername(), cfUser.getGuid(),
                     new ArrayList<>(asList(role)))).collect(toList());

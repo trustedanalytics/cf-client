@@ -15,62 +15,12 @@
  */
 package org.trustedanalytics.cloud.cc.api.manageusers;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Data;
 import org.trustedanalytics.cloud.cc.api.CcMetadata;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+@Data
 public class CcUser {
 
     private CcMetadata metadata;
     private CcUserEntity entity;
-
-    public CcUser() {
-    }
-
-    public CcUser(UUID guid, String username, String role) {
-        CcMetadata meta = new CcMetadata();
-        meta.setGuid(guid);
-        metadata = meta;
-        CcUserEntity ent = new CcUserEntity();
-        ent.setUsername(username);
-        List<String> roleList = new ArrayList<>();
-        roleList.add(role);
-        ent.setRoles(roleList);
-        entity = ent;
-    }
-
-    public CcMetadata getMetadata() {
-        return metadata;
-    }
-
-    public void setMetadata(CcMetadata metadata) {
-        this.metadata = metadata;
-    }
-
-    public CcUserEntity getEntity() {
-        return entity;
-    }
-
-    public void setEntity(CcUserEntity entity) {
-        this.entity = entity;
-    }
-
-    @JsonIgnore
-    public UUID getGuid() {
-        Optional<CcUser> user = Optional.of(this);
-        return user.map(CcUser::getMetadata).map(CcMetadata::getGuid).orElse(null);
-    }
-
-    @JsonIgnore
-    public String getUsername() {
-        Optional<CcUser> user = Optional.of(this);
-        return user.map(CcUser::getEntity).map(CcUserEntity::getUsername).orElse(null);
-    }
-
 }

@@ -15,10 +15,25 @@
  */
 package org.trustedanalytics.cloud.cc.api.manageusers;
 
+import rx.Observable;
+
 import java.util.Collection;
 import java.util.UUID;
 
 public interface CcOperationsUsers {
+
+    /**
+     * Returns all users count
+     * @return users count
+     */
+    Observable<Integer> getUsersCount();
+
+    /**
+     * Returns all users
+     * @return users
+     */
+    Observable<CcUser> getUsers();
+
     /**
      * Returns all users with given role within organization identified by given GUID.
      * @param orgGuid organization GUID

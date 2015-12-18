@@ -33,7 +33,7 @@ public class CcOrg {
 
     public CcOrg(UUID guid, String name) {
         CcMetadata meta = new CcMetadata();
-        meta.setGuid(guid);
+        meta.setGuid(guid.toString());
         metadata = meta;
         CcOrgEntity ent = new CcOrgEntity();
         ent.setName(name);
@@ -59,7 +59,7 @@ public class CcOrg {
     @JsonIgnore
     public UUID getGuid() {
         Optional<CcOrg> space = Optional.of(this);
-        return space.map(CcOrg::getMetadata).map(CcMetadata::getGuid).orElse(null);
+        return UUID.fromString(space.map(CcOrg::getMetadata).map(CcMetadata::getGuid).orElse(null));
     }
 
     @JsonIgnore

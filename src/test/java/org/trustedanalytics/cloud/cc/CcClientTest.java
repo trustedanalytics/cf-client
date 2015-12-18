@@ -35,7 +35,7 @@ import org.trustedanalytics.cloud.cc.api.CcSpace;
 import org.trustedanalytics.cloud.cc.api.CcSummary;
 import org.trustedanalytics.cloud.cc.api.CcAppState;
 import org.trustedanalytics.cloud.cc.api.CcAppStatus;
-import org.trustedanalytics.cloud.cc.api.manageusers.CcUsersList;
+import org.trustedanalytics.cloud.cc.api.manageusers.CcOrgUsersList;
 import org.trustedanalytics.cloud.cc.api.manageusers.Role;
 import org.trustedanalytics.cloud.cc.api.manageusers.User;
 import org.trustedanalytics.cloud.cc.api.CcExtendedServiceInstance;
@@ -404,7 +404,7 @@ import java.util.function.Supplier;
         UUID guid = UUID.randomUUID();
 
         when(template.getForObject(anyString(), any(), any(UUID.class)))
-            .thenReturn(mock(CcUsersList.class));
+            .thenReturn(mock(CcOrgUsersList.class));
         fun.apply(guid, Role.DEVELOPERS);
         verify(template).getForObject(eq(apiUrl), any(), any(UUID.class));
 

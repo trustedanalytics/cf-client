@@ -15,22 +15,55 @@
  */
 package org.trustedanalytics.cloud.cc.api.manageusers;
 
-import java.util.Collection;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CcUsersList {
+public class CcOrgUserEntity {
 
-    @JsonProperty("resources")
-    private Collection<CcUser> users;
+    private List<String> roles;
 
-    public Collection<CcUser> getUsers() {
-        return users;
+    private String username;
+
+    @JsonProperty("admin")
+    private boolean admin;
+
+    @JsonProperty("active")
+    private boolean active;
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
     }
 
-    public void setUsers(Collection<CcUser> users) {
-        this.users = users;
+    public List<String> getRoles() {
+        return roles;
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
 }

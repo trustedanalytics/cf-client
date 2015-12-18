@@ -13,12 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.trustedanalytics.cloud.cc.api;
+package org.trustedanalytics.cloud.cc.api.manageusers;
 
-import lombok.Data;
+import java.util.Collection;
 
-@Data
-public class CcMetadata {
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-    private String guid;
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class CcOrgUsersList {
+
+    @JsonProperty("resources")
+    private Collection<CcOrgUser> users;
+
+    public Collection<CcOrgUser> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Collection<CcOrgUser> users) {
+        this.users = users;
+    }
 }
