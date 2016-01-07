@@ -15,9 +15,7 @@
  */
 package org.trustedanalytics.cloud.cc.api.resources;
 
-import org.trustedanalytics.cloud.cc.api.CcAppStatus;
-import org.trustedanalytics.cloud.cc.api.CcAppSummary;
-import org.trustedanalytics.cloud.cc.api.CcServiceBindingList;
+import org.trustedanalytics.cloud.cc.api.*;
 import org.trustedanalytics.cloud.cc.api.queries.FilterExpander;
 import org.trustedanalytics.cloud.cc.api.queries.FilterQuery;
 
@@ -29,6 +27,9 @@ import java.util.UUID;
 
 @Headers("Accept: application/json")
 public interface CcApplicationResource {
+
+    @RequestLine("GET /v2/apps")
+    Page<CcExtendedService> getApplications();
 
     @RequestLine("GET /v2/apps/{app}/summary")
     CcAppSummary getAppSummary(@Param("app") UUID app);

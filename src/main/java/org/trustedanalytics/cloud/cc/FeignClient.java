@@ -412,4 +412,35 @@ public class FeignClient implements CcOperations {
     public Observable<Integer> getUsersCount() {
         return Observable.defer(() -> Observable.just(userResource.getUsersCount().getTotalResults()));
     }
+
+    @Override
+    public Observable<Integer> getServicesCount() {
+        return Observable.defer(() -> Observable.just(serviceResource.getServices().getTotalResults()));
+    }
+
+    @Override
+    public Observable<Integer> getServiceInstancesCount() {
+        return Observable.defer(() -> Observable.just(serviceResource.getExtendedServiceInstances().getTotalResults()));
+    }
+
+    @Override
+    public Observable<Integer> getApplicationsCount() {
+        return Observable.defer(() -> Observable.just(applicationResource.getApplications().getTotalResults()));
+    }
+
+    @Override
+    public Observable<Integer> getBuildpacksCount() {
+        return Observable.defer(() -> Observable.just(buildpackResource.getBuildpacks().getTotalResults()));
+    }
+
+    @Override
+    public Observable<Integer> getSpacesCount() {
+        return Observable.defer(() -> Observable.just(spaceResource.getSpaces().getTotalResults()));
+    }
+
+    @Override
+    public Observable<Integer> getOrgsCount() {
+        return Observable.defer(() -> Observable.just(organizationResource.getOrgs().getTotalResults()));
+    }
+
 }

@@ -106,4 +106,18 @@ public interface CcOperationsServices extends CcOperationsCommon {
      * Deletes given service key
      */
     void deleteServiceKey(UUID keyGuid);
+
+    Observable<Integer> getServicesCount();
+
+    /**
+     * Returns total number of services
+     * @return total number of services
+     */
+
+    Observable<Integer> getServiceInstancesCount();
+
+    /**
+     * Returns total number of service instances
+     * @return total number of service instances
+     */
 }

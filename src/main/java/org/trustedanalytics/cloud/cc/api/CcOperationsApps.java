@@ -81,4 +81,11 @@ public interface CcOperationsApps extends CcOperationsCommon {
      * @param appGuid application GUID
      */
     Observable<CcAppEnv> getAppEnv(UUID appGuid);
+
+    /**
+     * Returns total number of applications
+     * @return total number of applications
+     */
+    Observable<Integer> getApplicationsCount();
+
 }

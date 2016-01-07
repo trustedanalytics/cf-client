@@ -33,6 +33,11 @@ public interface CcOperationsCommon {
     Observable<CcBuildpack> getBuildpacks();
 
     /**
+     * Returns total number of buildpacks
+     */
+    Observable<Integer> getBuildpacksCount();
+
+    /**
      * Get quota
      */
     Observable<CcQuota> getQuota();

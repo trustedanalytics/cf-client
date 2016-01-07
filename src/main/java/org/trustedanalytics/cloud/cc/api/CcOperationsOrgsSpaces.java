@@ -166,4 +166,16 @@ public interface CcOperationsOrgsSpaces {
      * @param orgGuid GUID
      */
     Observable<CcOrgSummary> getOrgSummary(UUID orgGuid);
+
+    /**
+     * Returns total number of organizations.
+     * @return total number of organizations
+     */
+    Observable<Integer> getOrgsCount();
+
+    /**
+     * Returns total number of spaces.
+     * @return total number of spaces
+     */
+    Observable<Integer> getSpacesCount();
 }

@@ -373,6 +373,30 @@ public class CcClient implements CcOperations {
         throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG + FeignClient.class.getName());
     }
 
+    @Override public Observable<Integer> getServicesCount() {
+        throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG + FeignClient.class.getName());
+    }
+
+    @Override public Observable<Integer> getServiceInstancesCount() {
+        throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG + FeignClient.class.getName());
+    }
+
+    @Override public Observable<Integer> getApplicationsCount() {
+        throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG + FeignClient.class.getName());
+    }
+
+    @Override public Observable<Integer> getBuildpacksCount() {
+        throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG + FeignClient.class.getName());
+    }
+
+    @Override public Observable<Integer> getSpacesCount() {
+        throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG + FeignClient.class.getName());
+    }
+
+    @Override public Observable<Integer> getOrgsCount() {
+        throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG + FeignClient.class.getName());
+    }
+
     @Override
     public Observable<CcExtendedServicePlan> getExtendedServicePlans(UUID serviceGuid) {
         String spacesPath = "/v2/services/{service}/service_plans";
