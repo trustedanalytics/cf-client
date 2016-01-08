@@ -18,6 +18,30 @@ package org.trustedanalytics.cloud.cc;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy;
+
+import org.trustedanalytics.cloud.cc.api.utils.UuidJsonDeserializer;
+import org.trustedanalytics.cloud.cc.api.CcAppEnv;
+import org.trustedanalytics.cloud.cc.api.CcAppStatus;
+import org.trustedanalytics.cloud.cc.api.CcAppSummary;
+import org.trustedanalytics.cloud.cc.api.CcBuildpack;
+import org.trustedanalytics.cloud.cc.api.CcExtendedService;
+import org.trustedanalytics.cloud.cc.api.CcExtendedServiceInstance;
+import org.trustedanalytics.cloud.cc.api.CcExtendedServicePlan;
+import org.trustedanalytics.cloud.cc.api.CcMemoryUsage;
+import org.trustedanalytics.cloud.cc.api.CcNewServiceBinding;
+import org.trustedanalytics.cloud.cc.api.CcNewServiceInstance;
+import org.trustedanalytics.cloud.cc.api.CcNewServiceKey;
+import org.trustedanalytics.cloud.cc.api.CcOperations;
+import org.trustedanalytics.cloud.cc.api.CcOrg;
+import org.trustedanalytics.cloud.cc.api.CcOrgPermission;
+import org.trustedanalytics.cloud.cc.api.CcOrgSummary;
+import org.trustedanalytics.cloud.cc.api.CcQuota;
+import org.trustedanalytics.cloud.cc.api.CcServiceBinding;
+import org.trustedanalytics.cloud.cc.api.CcServiceBindingList;
+import org.trustedanalytics.cloud.cc.api.CcServiceKey;
+import org.trustedanalytics.cloud.cc.api.CcSpace;
+import org.trustedanalytics.cloud.cc.api.CcSummary;
+import org.trustedanalytics.cloud.cc.api.Page;
 import org.trustedanalytics.cloud.cc.api.loggers.ScramblingSlf4jLogger;
 import org.trustedanalytics.cloud.cc.api.manageusers.CcOrgUser;
 import org.trustedanalytics.cloud.cc.api.manageusers.CcUser;
@@ -45,12 +69,15 @@ import feign.jackson.JacksonEncoder;
 import org.apache.commons.lang.StringUtils;
 
 import java.net.URI;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import org.trustedanalytics.cloud.cc.api.*;
 import rx.Observable;
 
 public class FeignClient implements CcOperations {
@@ -138,7 +165,8 @@ public class FeignClient implements CcOperations {
         return applicationResource.getAppBindings(app, query);
     }
 
-    @Override public void deleteApp(UUID app) {
+    @Override
+    public void deleteApp(UUID app) {
         applicationResource.deleteApp(app);
     }
 
@@ -186,7 +214,7 @@ public class FeignClient implements CcOperations {
         return Observable.defer(() -> concatPages(spaceResource.getSpaces(), spaceResource::getSpaces));
     }
 
-    private <T> Observable<T> concatPages(Page<T> page, Function<URI , Page<T>> more) {
+    private <T> Observable<T> concatPages(Page<T> page, Function<URI, Page<T>> more) {
         if (page.getNextUrl() == null) {
             return Observable.from(page.getResources());
         } else {
@@ -196,7 +224,8 @@ public class FeignClient implements CcOperations {
         }
     }
 
-    @Override public Observable<CcSpace> getSpace(UUID spaceId) {
+    @Override
+    public Observable<CcSpace> getSpace(UUID spaceId) {
         return Observable.defer(() -> Observable.just(spaceResource.getSpace(spaceId)));
     }
 
@@ -229,7 +258,8 @@ public class FeignClient implements CcOperations {
         spaceResource.removeSpace(spaceGuid);
     }
 
-    @Override public Collection<CcSpace> getUsersSpaces(UUID userGuid, Role role, UUID orgGuid) {
+    @Override
+    public Collection<CcSpace> getUsersSpaces(UUID userGuid, Role role, UUID orgGuid) {
         return userResource.getUserSpaces(userGuid, ROLE_MAP.get(role), orgGuid).getSpaces();
     }
 
@@ -352,7 +382,8 @@ public class FeignClient implements CcOperations {
         spaceResource.associateUserWithSpaceRole(orgGuid, userGuid, role.getValue());
     }
 
-    @Override public void deleteUser(UUID guid) {
+    @Override
+    public void deleteUser(UUID guid) {
         userResource.deleteUser(guid);
     }
 
@@ -374,7 +405,8 @@ public class FeignClient implements CcOperations {
         return ccUsers.map(ccUser -> new User(ccUser.getUsername(), ccUser.getGuid(), role)).toList().toBlocking().first();
     }
 
-    @Override public void switchApp(UUID app, CcAppStatus appStatus) {
+    @Override
+    public void switchApp(UUID app, CcAppStatus appStatus) {
         applicationResource.switchApp(app, appStatus);
     }
 
@@ -405,7 +437,8 @@ public class FeignClient implements CcOperations {
     @Override
     public Observable<CcUser> getUsers() {
         return Observable.defer(() -> concatPages(userResource.getUsers(),
-            userResource::getUsers));
+            userResource::getUsers)
+                .filter(user -> !user.getMetadata().getGuid().equals(UuidJsonDeserializer.ARTIFICIAL_USER_GUID)));
     }
 
     @Override

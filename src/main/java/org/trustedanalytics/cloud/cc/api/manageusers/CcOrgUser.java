@@ -35,7 +35,7 @@ public class CcOrgUser {
 
     public CcOrgUser(UUID guid, String username, String role) {
         CcMetadata meta = new CcMetadata();
-        meta.setGuid(guid.toString());
+        meta.setGuid(guid);
         metadata = meta;
         CcOrgUserEntity ent = new CcOrgUserEntity();
         ent.setUsername(username);
@@ -64,7 +64,7 @@ public class CcOrgUser {
     @JsonIgnore
     public UUID getGuid() {
         Optional<CcOrgUser> user = Optional.of(this);
-        return UUID.fromString(user.map(CcOrgUser::getMetadata).map(CcMetadata::getGuid).orElse(null));
+        return user.map(CcOrgUser::getMetadata).map(CcMetadata::getGuid).orElse(null);
     }
 
     @JsonIgnore

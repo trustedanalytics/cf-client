@@ -15,10 +15,14 @@
  */
 package org.trustedanalytics.cloud.cc.api;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Data;
+import org.trustedanalytics.cloud.cc.api.utils.UuidJsonDeserializer;
+import java.util.UUID;
 
 @Data
 public class CcMetadata {
 
-    private String guid;
+    @JsonDeserialize(using = UuidJsonDeserializer.class)
+    private UUID guid;
 }

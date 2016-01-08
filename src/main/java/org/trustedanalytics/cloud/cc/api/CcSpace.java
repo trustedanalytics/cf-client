@@ -32,7 +32,7 @@ public class CcSpace {
 
     public CcSpace(UUID guid, String name, UUID orgGuid) {
         CcMetadata meta = new CcMetadata();
-        meta.setGuid(guid.toString());
+        meta.setGuid(guid);
         metadata = meta;
         CcSpaceEntity ent = new CcSpaceEntity();
         ent.setName(name);
@@ -59,7 +59,7 @@ public class CcSpace {
     @JsonIgnore
     public UUID getGuid() {
         Optional<CcSpace> space = Optional.of(this);
-        return UUID.fromString(space.map(CcSpace::getMetadata).map(CcMetadata::getGuid).orElse(null));
+        return space.map(CcSpace::getMetadata).map(CcMetadata::getGuid).orElse(null);
     }
 
     @JsonIgnore
