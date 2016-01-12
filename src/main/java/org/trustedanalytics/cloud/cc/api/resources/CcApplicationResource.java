@@ -48,7 +48,7 @@ public interface CcApplicationResource {
     @RequestLine("POST /v2/apps/{app}/restage")
     void restageApp(@Param("app") UUID app);
 
-    @RequestLine("DELETE /v2/apps/{app}")
+    @RequestLine("DELETE /v2/apps/{app}?recursive=true")
     void deleteApp(@Param("app") UUID app);
 
     @RequestLine("PUT /v2/apps/{app}")
