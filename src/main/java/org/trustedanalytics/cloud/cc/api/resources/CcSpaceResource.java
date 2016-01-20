@@ -34,7 +34,7 @@ public interface CcSpaceResource {
 
     @RequestLine("POST /v2/spaces")
     @Headers("Content-Type: application/json")
-    @Body("%7B\"organization_guid\":\"{org},\"name\":\"{name}\"%7D")
+    @Body("%7B\"organization_guid\":\"{org}\",\"name\":\"{name}\"%7D")
     CcSpace createSpace(@Param("org") UUID org, @Param("name") String name);
 
     @RequestLine("GET /v2/spaces/{space}")

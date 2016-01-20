@@ -15,6 +15,7 @@
  */
 package org.trustedanalytics.cloud.cc.api.manageusers;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -23,11 +24,9 @@ import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.collect.ImmutableCollection;
+import com.google.common.collect.ImmutableList;
 
-/**
- * @author flame
- *
- */
 public class User {
     private UUID guid;
     private String username;
@@ -38,17 +37,17 @@ public class User {
     private UUID orgGuid;
     
     public User(String username, UUID guid, Role... roles) {
-        this(username, guid, Arrays.asList(roles));
+        this(username, guid, ImmutableList.copyOf(roles));
     }
 
     public User(String username, UUID guid, List<Role> roles) {
-        this(username, guid, roles, null);
+        this(username, guid, ImmutableList.copyOf(roles), null);
     }
 
     public User(String username, UUID guid, List<Role> roles, UUID orgGuid) {
         this.guid = guid;
         this.username = username;
-        this.roles = roles;
+        this.roles = ImmutableList.copyOf(roles);
         this.orgGuid = orgGuid;
     }
 
@@ -61,24 +60,17 @@ public class User {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public List<Role> getRoles() {
         return roles;
     }
 
-    public void appendRole(Role role) {
-        this.roles.add(role);
+    public User appendRole(Role role) {
+        List<Role> roles = ImmutableList.<Role>builder().addAll(this.roles).add(role).build();
+        return new User(username, guid, roles);
     }
 
     public UUID getOrgGuid() {
         return orgGuid;
-    }
-
-    public void setOrgGuid(UUID orgGuid) {
-        this.orgGuid = orgGuid;
     }
 
     @Override

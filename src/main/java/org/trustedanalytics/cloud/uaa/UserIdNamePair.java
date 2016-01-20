@@ -17,31 +17,25 @@ package org.trustedanalytics.cloud.uaa;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
 
 import java.util.UUID;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserIdNamePair {
-
+    @Getter
     @JsonProperty("id")
     private UUID guid;
+
+    @Getter
     @JsonProperty("userName")
     private String userName;
 
-    public UUID getGuid() {
-        return guid;
-    }
-
-    public void setGuid(UUID guid) {
-        this.guid = guid;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public static UserIdNamePair of(UUID guid, String userName) {
+        UserIdNamePair newPair = new UserIdNamePair();
+        newPair.guid = guid;
+        newPair.userName = userName;
+        return newPair;
     }
 }
 
