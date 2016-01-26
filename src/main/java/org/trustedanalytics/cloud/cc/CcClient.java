@@ -553,6 +553,16 @@ public class CcClient implements CcOperations {
         return getUsers(spaceGuid, role, SPACES);
     }
 
+    @Override
+    public Observable<User> getSpaceUsersWithRoles(UUID spaceGuid) {
+        throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG + FeignClient.class.getName());
+    }
+
+    @Override
+    public Observable<User> getOrgUsersWithRoles(UUID orgGuid) {
+        throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG + FeignClient.class.getName());
+    }
+
     @Override public void deleteUser(UUID guid) {
         template.delete(baseUrl + "/v2/users/{guid}", guid);
     }

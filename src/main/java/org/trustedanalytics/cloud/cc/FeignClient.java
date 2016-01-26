@@ -80,6 +80,8 @@ import java.util.stream.Collectors;
 
 import rx.Observable;
 
+import static java.util.stream.Collectors.toList;
+
 public class FeignClient implements CcOperations {
     private static final Map<Role, String> ROLE_MAP = ImmutableMap.<Role, String>builder()
         .put(Role.MANAGERS, "managed_spaces")
@@ -372,6 +374,20 @@ public class FeignClient implements CcOperations {
 
     @Override public Collection<User> getSpaceUsers(UUID spaceGuid, Role role) {
         return toUsers(spaceResource.getSpaceUsers(spaceGuid, role.getValue()), role);
+    }
+
+    @Override
+    public Observable<User> getSpaceUsersWithRoles(UUID spaceGuid) {
+        return Observable.defer(() -> concatPages(spaceResource.getSpaceUsersWithRoles(spaceGuid),
+                spaceResource::getSpaceUsersWithRoles))
+                .map(ccOrgUser -> new User(ccOrgUser.getUsername(), ccOrgUser.getGuid(), ccOrgUser.getRoles()));
+    }
+
+    @Override
+    public Observable<User> getOrgUsersWithRoles(UUID orgGuid) {
+        return Observable.defer(() -> concatPages(organizationResource.getOrganizationUsersWithRoles(orgGuid),
+                organizationResource::getOrganizationUsersWithRoles))
+                .map(ccOrgUser -> new User(ccOrgUser.getUsername(), ccOrgUser.getGuid(), ccOrgUser.getRoles()));
     }
 
     @Override public void assignOrgRole(UUID userGuid, UUID orgGuid, Role role) {

@@ -51,6 +51,20 @@ public interface CcOperationsUsers {
     Collection<User> getSpaceUsers(UUID spaceGuid, Role role);
 
     /**
+     * Returns all users with their roles within space identified by given GUID
+     * @param spaceGuid space GUID
+     * @return users with their roles within space
+     */
+    Observable<User> getSpaceUsersWithRoles(UUID spaceGuid);
+
+    /**
+     * Returns all users with their roles within organization identified by given GUID
+     * @param orgGuid organization GUID
+     * @return users with their roles within organization
+     */
+    Observable<User> getOrgUsersWithRoles(UUID orgGuid);
+
+    /**
      * Assigns organization role to user identified by given GUID.
      * @param userGuid user GUID
      * @param orgGuid organization GUID

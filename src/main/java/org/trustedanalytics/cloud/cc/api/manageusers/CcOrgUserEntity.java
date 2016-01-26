@@ -19,9 +19,13 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@SuppressWarnings("unused")
 public class CcOrgUserEntity {
 
     private List<String> roles;
@@ -36,6 +40,16 @@ public class CcOrgUserEntity {
 
     public void setRoles(List<String> roles) {
         this.roles = roles;
+    }
+
+    @JsonSetter("space_roles")
+    public void setSpaceRoles(List<String> roles) {
+        this.roles = ImmutableList.copyOf(roles);
+    }
+
+    @JsonSetter("organization_roles")
+    public void setOrgRoles(List<String> roles) {
+        this.roles = ImmutableList.copyOf(roles);
     }
 
     public List<String> getRoles() {

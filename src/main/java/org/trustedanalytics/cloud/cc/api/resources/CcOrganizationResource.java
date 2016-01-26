@@ -26,6 +26,7 @@ import feign.Body;
 import feign.Headers;
 import feign.Param;
 import feign.RequestLine;
+import org.trustedanalytics.cloud.cc.api.manageusers.CcOrgUsersList;
 
 import java.net.URI;
 import java.util.UUID;
@@ -59,6 +60,12 @@ public interface CcOrganizationResource {
 
     @RequestLine("GET /v2/organizations/{org}/{role}")
     Page<CcOrgUser> getOrganizationUsers(@Param("org") UUID org, @Param("role") String role);
+
+    @RequestLine("GET")
+    Page<CcOrgUser> getOrganizationUsersWithRoles(URI nextPageUrl);
+
+    @RequestLine("GET /v2/organizations/{org}/user_roles")
+    Page<CcOrgUser> getOrganizationUsersWithRoles(@Param("org") UUID space);
 
     @RequestLine("PUT /v2/organizations/{org}/users/{user}")
     void associateUserWithOrganization(@Param("org") UUID org, @Param("user") UUID user);

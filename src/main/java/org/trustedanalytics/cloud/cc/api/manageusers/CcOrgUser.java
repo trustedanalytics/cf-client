@@ -15,10 +15,13 @@
  */
 package org.trustedanalytics.cloud.cc.api.manageusers;
 
+import static java.util.stream.Collectors.toList;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -73,4 +76,16 @@ public class CcOrgUser {
         return user.map(CcOrgUser::getEntity).map(CcOrgUserEntity::getUsername).orElse(null);
     }
 
+    @JsonIgnore
+    public List<Role> getRoles() {
+        Optional<CcOrgUser> user = Optional.of(this);
+        return Stream.of(user)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .map(CcOrgUser::getEntity)
+                .filter(entity -> entity.getRoles() != null)
+                .flatMap(entity -> entity.getRoles().stream())
+                .map(Role::getRoleByName)
+                .collect(toList());
+    }
 }

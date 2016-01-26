@@ -19,6 +19,7 @@ import org.trustedanalytics.cloud.cc.api.CcExtendedService;
 import org.trustedanalytics.cloud.cc.api.CcSpace;
 import org.trustedanalytics.cloud.cc.api.CcSummary;
 import org.trustedanalytics.cloud.cc.api.Page;
+import org.trustedanalytics.cloud.cc.api.manageusers.CcOrgUser;
 import org.trustedanalytics.cloud.cc.api.manageusers.CcOrgUsersList;
 
 import feign.Body;
@@ -48,6 +49,12 @@ public interface CcSpaceResource {
 
     @RequestLine("GET /v2/spaces/{space}/{role}")
     CcOrgUsersList getSpaceUsers(@Param("space") UUID space, @Param("role") String role);
+
+    @RequestLine("GET")
+    Page<CcOrgUser> getSpaceUsersWithRoles(URI nextPageUrl);
+
+    @RequestLine("GET /v2/spaces/{space}/user_roles")
+    Page<CcOrgUser> getSpaceUsersWithRoles(@Param("space") UUID space);
 
     @RequestLine("GET /v2/spaces/{space}/summary?inline-relations-depth=1")
     CcSummary getSpaceSummary(@Param("space") UUID space);
