@@ -16,6 +16,7 @@
 package org.trustedanalytics.cloud.cc.api;
 
 import org.trustedanalytics.cloud.cc.api.manageusers.Role;
+import org.trustedanalytics.cloud.cc.api.queries.FilterQuery;
 import rx.Observable;
 
 import java.util.Collection;
@@ -150,10 +151,10 @@ public interface CcOperationsOrgsSpaces {
      * Get spaces that user has access to in given role.
      * @param userGuid GUID
      * @param role user role
-     * @param orgGuid GUID
+     * @param filterQuery filter
      * @return spaces
      */
-    Collection<CcSpace> getUsersSpaces(UUID userGuid, Role role, UUID orgGuid);
+    Collection<CcSpace> getUsersSpaces(UUID userGuid, Role role, FilterQuery filterQuery);
 
     /**
      * Get memory usage from organization identified by given GUID.

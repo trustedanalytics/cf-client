@@ -286,11 +286,10 @@ public class CcClient implements CcOperations {
         template.delete(baseUrl + removeSpacePath, pathVars);
     }
 
-    @Override public Collection<CcSpace> getUsersSpaces(UUID userGuid, Role role, UUID orgGuid) {
-        String usersSpacesPath = "/v2/users/{user}/{spaceType}?q=organization_guid:{org}";
+    @Override public Collection<CcSpace> getUsersSpaces(UUID userGuid, Role role, FilterQuery filterQuery) {
+        String usersSpacesPath = "/v2/users/{user}/{spaceType}?q={query}";
         Map<String, Object> pathVars = ImmutableMap
-            .of("user", userGuid.toString(), "spaceType", roleMap.get(role), "org",
-                    orgGuid.toString());
+            .of("user", userGuid.toString(), "spaceType", roleMap.get(role), "query", filterQuery.format());
         return template.getForEntity(baseUrl + usersSpacesPath, CcSpacesList.class, pathVars)
             .getBody().getSpaces();
     }

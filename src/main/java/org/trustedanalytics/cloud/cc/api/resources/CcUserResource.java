@@ -26,6 +26,8 @@ import feign.Body;
 import feign.Headers;
 import feign.Param;
 import feign.RequestLine;
+import org.trustedanalytics.cloud.cc.api.queries.FilterExpander;
+import org.trustedanalytics.cloud.cc.api.queries.FilterQuery;
 
 import java.net.URI;
 import java.util.UUID;
@@ -37,8 +39,9 @@ public interface CcUserResource {
     @Body("%7B\"guid\":\"{user}\"%7D")
     CcOrgUser createUser(@Param("user") UUID user);
 
-    @RequestLine("GET /v2/users/{user}/{spaceType}?q=organization_guid:{org}")
-    CcSpacesList getUserSpaces(@Param("user") UUID user, @Param("spaceType") String spaceType, @Param("org") UUID org);
+    @RequestLine("GET /v2/users/{user}/{spaceType}?q={filter}")
+    CcSpacesList getUserSpaces(@Param("user") UUID user, @Param("spaceType") String spaceType,
+                               @Param(value = "filter", expander = FilterExpander.class) FilterQuery filter);
 
     @RequestLine("GET /v2/users/{user}/managed_organizations")
     CcOrgsList getManagedOrganizations(@Param("user") UUID user);

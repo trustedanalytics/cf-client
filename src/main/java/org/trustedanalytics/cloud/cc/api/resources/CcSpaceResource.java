@@ -78,5 +78,5 @@ public interface CcSpaceResource {
     Page<CcExtendedService> getServices(URI nextPageUrl);
 
     @RequestLine("DELETE /v2/spaces/{space}?async=true&recursive=true")
-    String removeSpace(@Param("space") UUID space);
+    void removeSpace(@Param("space") UUID space);
 }

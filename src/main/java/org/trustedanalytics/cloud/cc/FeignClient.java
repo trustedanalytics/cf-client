@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy;
 
+import org.trustedanalytics.cloud.cc.api.customizations.FeignErrorDecoder;
 import org.trustedanalytics.cloud.cc.api.utils.UuidJsonDeserializer;
 import org.trustedanalytics.cloud.cc.api.CcAppEnv;
 import org.trustedanalytics.cloud.cc.api.CcAppStatus;
@@ -80,8 +81,6 @@ import java.util.stream.Collectors;
 
 import rx.Observable;
 
-import static java.util.stream.Collectors.toList;
-
 public class FeignClient implements CcOperations {
     private static final Map<Role, String> ROLE_MAP = ImmutableMap.<Role, String>builder()
         .put(Role.MANAGERS, "managed_spaces")
@@ -138,7 +137,8 @@ public class FeignClient implements CcOperations {
                 .decoder(new JacksonDecoder(mapper))
                 .options(new Request.Options(CONNECT_TIMEOUT, READ_TIMEOUT))
                 .logger(new ScramblingSlf4jLogger(FeignClient.class))
-                .logLevel(feign.Logger.Level.BASIC));
+                .logLevel(feign.Logger.Level.BASIC))
+                .errorDecoder(new FeignErrorDecoder());
 
         this.applicationResource = builder.target(CcApplicationResource.class, targetUrl);
         this.organizationResource = builder.target(CcOrganizationResource.class, targetUrl);
@@ -261,8 +261,8 @@ public class FeignClient implements CcOperations {
     }
 
     @Override
-    public Collection<CcSpace> getUsersSpaces(UUID userGuid, Role role, UUID orgGuid) {
-        return userResource.getUserSpaces(userGuid, ROLE_MAP.get(role), orgGuid).getSpaces();
+    public Collection<CcSpace> getUsersSpaces(UUID userGuid, Role role, FilterQuery filterQuery) {
+        return userResource.getUserSpaces(userGuid, ROLE_MAP.get(role), filterQuery).getSpaces();
     }
 
     @Override
