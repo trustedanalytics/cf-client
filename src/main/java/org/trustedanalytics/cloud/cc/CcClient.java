@@ -53,6 +53,8 @@ import org.trustedanalytics.cloud.cc.api.manageusers.CcOrgUsersList;
 import org.trustedanalytics.cloud.cc.api.manageusers.Role;
 import org.trustedanalytics.cloud.cc.api.manageusers.User;
 import org.trustedanalytics.cloud.cc.api.queries.FilterQuery;
+import org.trustedanalytics.cloud.cc.api.CcPlanVisibility;
+import org.trustedanalytics.cloud.cc.api.CcPlanVisibilityEntity;
 import rx.Observable;
 
 import java.util.ArrayList;
@@ -214,7 +216,7 @@ public class CcClient implements CcOperations {
         String spacePath = "/v2/spaces/{space}";
         Map<String, Object> pathVars = ImmutableMap.of(SPACE, spaceId.toString());
         return Observable.defer(() -> Observable
-            .just(template.getForEntity(baseUrl + spacePath, CcSpace.class, pathVars).getBody()));
+                .just(template.getForEntity(baseUrl + spacePath, CcSpace.class, pathVars).getBody()));
     }
 
     @Override public Observable<CcSpace> getSpaces(UUID org) {
@@ -222,11 +224,11 @@ public class CcClient implements CcOperations {
         Map<String, Object> pathVars = ImmutableMap.of("org", org.toString());
         return Observable.defer(() ->
             concatPages(
-                getForEntity(baseUrl + spacesPath, new ParameterizedTypeReference<Page<CcSpace>>() {
-                }, pathVars),
-                nextUrl -> getForEntity(baseUrl + nextUrl,
-                    new ParameterizedTypeReference<Page<CcSpace>>() {
-                    }, pathVars)));
+                    getForEntity(baseUrl + spacesPath, new ParameterizedTypeReference<Page<CcSpace>>() {
+                    }, pathVars),
+                    nextUrl -> getForEntity(baseUrl + nextUrl,
+                            new ParameterizedTypeReference<Page<CcSpace>>() {
+                            }, pathVars)));
     }
 
     @Override public Collection<CcOrg> getManagedOrganizations(UUID userId) {
@@ -430,6 +432,11 @@ public class CcClient implements CcOperations {
 
     @Override
     public void deleteServiceKey(UUID keyGuid) {
+        throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG + FeignClient.class.getName());
+    }
+
+    @Override
+    public Observable<CcPlanVisibility> setExtendedServicePlanVisibility(UUID servicePlanGuid, UUID organizationGuid) {
         throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG + FeignClient.class.getName());
     }
 

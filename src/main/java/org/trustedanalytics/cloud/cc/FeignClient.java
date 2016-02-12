@@ -58,6 +58,8 @@ import org.trustedanalytics.cloud.cc.api.resources.CcSpaceResource;
 import org.trustedanalytics.cloud.cc.api.resources.CcUserResource;
 import org.trustedanalytics.cloud.cc.api.resources.CcQuotaResource;
 import org.trustedanalytics.cloud.cc.api.resources.CcBuildpacksResource;
+import org.trustedanalytics.cloud.cc.api.CcPlanVisibility;
+import org.trustedanalytics.cloud.cc.api.CcPlanVisibilityEntity;
 
 import com.google.common.collect.ImmutableMap;
 
@@ -273,13 +275,13 @@ public class FeignClient implements CcOperations {
     @Override
     public Observable<CcExtendedServiceInstance> getExtendedServiceInstances() {
         return Observable.defer(() -> concatPages(serviceResource.getExtendedServiceInstances(),
-            serviceResource::getExtendedServiceInstances));
+                serviceResource::getExtendedServiceInstances));
     }
 
     @Override
     public Observable<CcExtendedServiceInstance> getExtendedServiceInstances(FilterQuery filterQuery) {
         return Observable.defer(() -> concatPages(serviceResource.getExtendedServiceInstances(filterQuery),
-            serviceResource::getExtendedServiceInstances));
+                serviceResource::getExtendedServiceInstances));
     }
 
     @Override
@@ -303,7 +305,7 @@ public class FeignClient implements CcOperations {
     @Override
     public Observable<CcExtendedService> getServices(UUID spaceGuid) {
         return Observable.defer(() -> concatPages(spaceResource.getServices(spaceGuid),
-            spaceResource::getServices));
+                spaceResource::getServices));
     }
 
     @Override public Observable<CcExtendedService> getService(UUID serviceGuid) {
@@ -317,7 +319,7 @@ public class FeignClient implements CcOperations {
 
     @Override public Observable<CcServiceKey> getServiceKeys() {
         return Observable.defer(() -> concatPages(serviceResource.getServiceKeys(),
-            serviceResource::getServiceKeys));
+                serviceResource::getServiceKeys));
     }
 
     @Override public Observable<CcServiceKey> createServiceKey(CcNewServiceKey serviceKey) {
@@ -327,6 +329,11 @@ public class FeignClient implements CcOperations {
     @Override
     public void deleteServiceKey(UUID keyGuid) {
         serviceResource.deleteServiceKey(keyGuid);
+    }
+
+    @Override
+    public Observable<CcPlanVisibility> setExtendedServicePlanVisibility(UUID servicePlanGuid, UUID organizationGuid) {
+        return Observable.defer(() -> Observable.just(serviceResource.setServicePlanVisibility(servicePlanGuid, organizationGuid)));
     }
 
     @Override public Observable<CcExtendedServiceInstance> createServiceInstance(CcNewServiceInstance serviceInstance) {
@@ -442,7 +449,7 @@ public class FeignClient implements CcOperations {
     @Override
     public Observable<CcBuildpack> getBuildpacks() {
         return Observable.defer(() -> concatPages(buildpackResource.getBuildpacks(),
-            buildpackResource::getBuildpacks));
+                buildpackResource::getBuildpacks));
     }
 
     @Override

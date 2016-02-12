@@ -15,6 +15,7 @@
  */
 package org.trustedanalytics.cloud.cc.api.resources;
 
+import feign.Body;
 import feign.Headers;
 import feign.Param;
 import feign.RequestLine;
@@ -22,6 +23,8 @@ import feign.RequestLine;
 import org.trustedanalytics.cloud.cc.api.CcExtendedService;
 import org.trustedanalytics.cloud.cc.api.CcExtendedServicePlan;
 import org.trustedanalytics.cloud.cc.api.CcNewServiceKey;
+import org.trustedanalytics.cloud.cc.api.CcPlanVisibility;
+import org.trustedanalytics.cloud.cc.api.CcPlanVisibilityEntity;
 import org.trustedanalytics.cloud.cc.api.CcServiceKey;
 import org.trustedanalytics.cloud.cc.api.Page;
 import org.trustedanalytics.cloud.cc.api.CcNewServiceInstance;
@@ -89,4 +92,9 @@ public interface CcServiceResource {
 
     @RequestLine("DELETE /v2/service_keys/{key}")
     void deleteServiceKey(@Param("key") UUID keyGuid);
+
+    @RequestLine("POST /v2/service_plan_visibilities")
+    @Headers("Content-Type: application/json")
+    @Body("%7B\"service_plan_guid\": \"{service_plan_guid}\", \"organization_guid\": \"{organization_guid}\"%7D")
+    CcPlanVisibility setServicePlanVisibility(@Param("service_plan_guid") UUID servicePlanGuid, @Param("organization_guid") UUID organizationGuid);
 }

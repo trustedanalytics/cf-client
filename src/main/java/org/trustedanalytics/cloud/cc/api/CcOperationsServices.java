@@ -120,4 +120,13 @@ public interface CcOperationsServices extends CcOperationsCommon {
      * Returns total number of service instances
      * @return total number of service instances
      */
+
+    /**
+     * Set visibility of service plan to specific organization
+     * @param servicePlanGuid service plan GUID
+     * @param organizationGuid organization GUID
+     * @return services plan
+     */
+    Observable<CcPlanVisibility> setExtendedServicePlanVisibility(UUID servicePlanGuid, UUID organizationGuid);
+
 }
