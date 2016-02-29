@@ -43,7 +43,7 @@ public interface CcOrganizationResource {
     @Body("%7B\"name\":\"{name}\"%7D")
     void updateOrganization(@Param("org") UUID org, @Param("name") String name);
 
-    @RequestLine("DELETE /v2/organizations/{org}")
+    @RequestLine("DELETE /v2/organizations/{org}?async=true&recursive=true")
     void deleteOrganization(@Param("org") UUID org);
 
     @RequestLine("GET /v2/organizations/{org}")
