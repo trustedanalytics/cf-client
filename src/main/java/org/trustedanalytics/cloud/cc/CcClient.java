@@ -320,6 +320,11 @@ public class CcClient implements CcOperations {
         throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG + FeignClient.class.getName());
     }
 
+    @Override
+    public Observable<CcExtendedService> getOrganizationServices(UUID orgGuid) {
+        throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG + FeignClient.class.getName());
+    }
+
     @Override public Observable<CcExtendedService> getExtendedServices() {
         return Observable.defer(() ->
             concatPages(getForEntity(baseUrl + "/v2/services",

@@ -15,18 +15,17 @@
  */
 package org.trustedanalytics.cloud.cc.api.resources;
 
-import org.trustedanalytics.cloud.cc.api.CcOrgSummary;
-import org.trustedanalytics.cloud.cc.api.CcMemoryUsage;
-import org.trustedanalytics.cloud.cc.api.CcOrg;
-import org.trustedanalytics.cloud.cc.api.CcSpace;
-import org.trustedanalytics.cloud.cc.api.Page;
-import org.trustedanalytics.cloud.cc.api.manageusers.CcOrgUser;
-
 import feign.Body;
 import feign.Headers;
 import feign.Param;
 import feign.RequestLine;
-import org.trustedanalytics.cloud.cc.api.manageusers.CcOrgUsersList;
+import org.trustedanalytics.cloud.cc.api.CcExtendedService;
+import org.trustedanalytics.cloud.cc.api.CcMemoryUsage;
+import org.trustedanalytics.cloud.cc.api.CcOrg;
+import org.trustedanalytics.cloud.cc.api.CcOrgSummary;
+import org.trustedanalytics.cloud.cc.api.CcSpace;
+import org.trustedanalytics.cloud.cc.api.Page;
+import org.trustedanalytics.cloud.cc.api.manageusers.CcOrgUser;
 
 import java.net.URI;
 import java.util.UUID;
@@ -87,4 +86,10 @@ public interface CcOrganizationResource {
 
     @RequestLine("GET /v2/organizations/{org}/summary")
     CcOrgSummary getOrganizationSummary(@Param("org") UUID org);
+
+    @RequestLine("GET /v2/organizations/{org}/services")
+    Page<CcExtendedService> getOrganizationServices(@Param("org") UUID org);
+
+    @RequestLine("GET")
+    Page<CcExtendedService> getOrganizationServices(URI nextPageUrl);
 }

@@ -28,6 +28,13 @@ public interface CcOperationsServices extends CcOperationsCommon {
     Observable<CcExtendedService> getServices(UUID spaceGuid);
 
     /**
+     * Returns services within organization identified by given GUID
+     * @param orgGuid GUID
+     * @return services
+     */
+    Observable<CcExtendedService> getOrganizationServices(UUID orgGuid);
+
+    /**
      * Returns services
      * @return services
      */
