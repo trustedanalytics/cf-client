@@ -43,6 +43,9 @@ public class CcServiceInstance {
     @JsonProperty("bound_app_count")
     private int boundAppCount;
 
+    @JsonProperty("last_operation")
+    private CcLastOperation lastOperation;
+
     public CcServiceInstance() {
     }
 
