@@ -15,12 +15,6 @@
  */
 package org.trustedanalytics.cloud.cc;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy;
-
-import org.trustedanalytics.cloud.cc.api.customizations.FeignErrorDecoder;
-import org.trustedanalytics.cloud.cc.api.utils.UuidJsonDeserializer;
 import org.trustedanalytics.cloud.cc.api.CcAppEnv;
 import org.trustedanalytics.cloud.cc.api.CcAppStatus;
 import org.trustedanalytics.cloud.cc.api.CcAppSummary;
@@ -36,6 +30,7 @@ import org.trustedanalytics.cloud.cc.api.CcOperations;
 import org.trustedanalytics.cloud.cc.api.CcOrg;
 import org.trustedanalytics.cloud.cc.api.CcOrgPermission;
 import org.trustedanalytics.cloud.cc.api.CcOrgSummary;
+import org.trustedanalytics.cloud.cc.api.CcPlanVisibility;
 import org.trustedanalytics.cloud.cc.api.CcQuota;
 import org.trustedanalytics.cloud.cc.api.CcServiceBinding;
 import org.trustedanalytics.cloud.cc.api.CcServiceBindingList;
@@ -43,24 +38,27 @@ import org.trustedanalytics.cloud.cc.api.CcServiceKey;
 import org.trustedanalytics.cloud.cc.api.CcSpace;
 import org.trustedanalytics.cloud.cc.api.CcSummary;
 import org.trustedanalytics.cloud.cc.api.Page;
+import org.trustedanalytics.cloud.cc.api.customizations.CloudFoundryErrorDecoder;
 import org.trustedanalytics.cloud.cc.api.loggers.ScramblingSlf4jLogger;
 import org.trustedanalytics.cloud.cc.api.manageusers.CcOrgUser;
-import org.trustedanalytics.cloud.cc.api.manageusers.CcUser;
 import org.trustedanalytics.cloud.cc.api.manageusers.CcOrgUsersList;
+import org.trustedanalytics.cloud.cc.api.manageusers.CcUser;
 import org.trustedanalytics.cloud.cc.api.manageusers.Role;
 import org.trustedanalytics.cloud.cc.api.manageusers.User;
 import org.trustedanalytics.cloud.cc.api.queries.FilterQuery;
 import org.trustedanalytics.cloud.cc.api.resources.CcApplicationResource;
+import org.trustedanalytics.cloud.cc.api.resources.CcBuildpacksResource;
 import org.trustedanalytics.cloud.cc.api.resources.CcOrganizationResource;
+import org.trustedanalytics.cloud.cc.api.resources.CcQuotaResource;
 import org.trustedanalytics.cloud.cc.api.resources.CcServiceBindingResource;
 import org.trustedanalytics.cloud.cc.api.resources.CcServiceResource;
 import org.trustedanalytics.cloud.cc.api.resources.CcSpaceResource;
 import org.trustedanalytics.cloud.cc.api.resources.CcUserResource;
-import org.trustedanalytics.cloud.cc.api.resources.CcQuotaResource;
-import org.trustedanalytics.cloud.cc.api.resources.CcBuildpacksResource;
-import org.trustedanalytics.cloud.cc.api.CcPlanVisibility;
-import org.trustedanalytics.cloud.cc.api.CcPlanVisibilityEntity;
+import org.trustedanalytics.cloud.cc.api.utils.UuidJsonDeserializer;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy;
 import com.google.common.collect.ImmutableMap;
 
 import feign.Feign;
@@ -139,8 +137,8 @@ public class FeignClient implements CcOperations {
                 .decoder(new JacksonDecoder(mapper))
                 .options(new Request.Options(CONNECT_TIMEOUT, READ_TIMEOUT))
                 .logger(new ScramblingSlf4jLogger(FeignClient.class))
-                .logLevel(feign.Logger.Level.BASIC))
-                .errorDecoder(new FeignErrorDecoder());
+                .logLevel(feign.Logger.Level.BASIC)
+                .errorDecoder(new CloudFoundryErrorDecoder()));
 
         this.applicationResource = builder.target(CcApplicationResource.class, targetUrl);
         this.organizationResource = builder.target(CcOrganizationResource.class, targetUrl);
@@ -429,7 +427,7 @@ public class FeignClient implements CcOperations {
             .map(ccUser -> new User(ccUser.getUsername(), ccUser.getGuid(), role))
             .collect(Collectors.toList());
     }
-    
+
     private Collection<User> toUsers(Observable<CcOrgUser> ccUsers, Role role) {
         return ccUsers.map(ccUser -> new User(ccUser.getUsername(), ccUser.getGuid(), role)).toList().toBlocking().first();
     }
