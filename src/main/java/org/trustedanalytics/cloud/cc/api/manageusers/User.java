@@ -65,8 +65,8 @@ public class User {
     }
 
     public User appendRole(Role role) {
-        List<Role> roles = ImmutableList.<Role>builder().addAll(this.roles).add(role).build();
-        return new User(username, guid, roles);
+        List<Role> userRoles = ImmutableList.<Role>builder().addAll(this.roles).add(role).build();
+        return new User(username, guid, userRoles);
     }
 
     public UUID getOrgGuid() {

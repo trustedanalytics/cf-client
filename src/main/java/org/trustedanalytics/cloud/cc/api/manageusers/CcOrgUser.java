@@ -83,8 +83,8 @@ public class CcOrgUser {
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .map(CcOrgUser::getEntity)
-                .filter(entity -> entity.getRoles() != null)
-                .flatMap(entity -> entity.getRoles().stream())
+                .filter(e -> e.getRoles() != null)
+                .flatMap(e -> e.getRoles().stream())
                 .map(Role::getRoleByName)
                 .collect(toList());
     }

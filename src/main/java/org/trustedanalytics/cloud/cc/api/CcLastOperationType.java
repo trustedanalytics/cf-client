@@ -41,7 +41,7 @@ public enum CcLastOperationType {
     }
 
     @JsonCreator
-    public static CcLastOperationType Create(String value) {
+    public static CcLastOperationType create(String value) {
         return Arrays.asList(CcLastOperationType.values())
                 .stream()
                 .filter(enm -> enm.type.equalsIgnoreCase(value))

@@ -54,7 +54,6 @@ import org.trustedanalytics.cloud.cc.api.manageusers.Role;
 import org.trustedanalytics.cloud.cc.api.manageusers.User;
 import org.trustedanalytics.cloud.cc.api.queries.FilterQuery;
 import org.trustedanalytics.cloud.cc.api.CcPlanVisibility;
-import org.trustedanalytics.cloud.cc.api.CcPlanVisibilityEntity;
 import rx.Observable;
 
 import java.util.ArrayList;

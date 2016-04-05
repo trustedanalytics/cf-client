@@ -39,7 +39,7 @@ public class UuidJsonDeserializer extends JsonDeserializer<UUID> {
             return UUID.fromString(jsonParser.getValueAsString());
         }
         catch (IllegalArgumentException e) {
-            LOGGER.debug("Unable to deserialize GUID: {}", jsonParser.getValueAsString());
+            LOGGER.debug("Unable to deserialize GUID: {}, exception: {}", jsonParser.getValueAsString(), e);
             return ARTIFICIAL_USER_GUID;
         }
     }
