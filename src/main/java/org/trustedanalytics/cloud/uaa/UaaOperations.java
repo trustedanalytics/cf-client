@@ -19,8 +19,8 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 
-import org.trustedanalytics.org.cloudfoundry.identity.uaa.scim.ScimUser;
-import org.trustedanalytics.org.cloudfoundry.identity.uaa.scim.SearchResults;
+import org.cloudfoundry.identity.uaa.rest.SearchResults;
+import org.cloudfoundry.identity.uaa.scim.ScimUser;
 
 public interface UaaOperations {
 

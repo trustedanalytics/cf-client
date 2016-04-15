@@ -13,6 +13,8 @@
 package org.trustedanalytics.org.cloudfoundry.identity.uaa.scim;
 
 import org.cloudfoundry.identity.uaa.authentication.Origin;
+import org.cloudfoundry.identity.uaa.scim.ScimUser;
+
 import java.util.Arrays;
 
 public class ScimUserFactory {
@@ -30,6 +32,7 @@ public class ScimUserFactory {
         scimUser.setEmails(Arrays.asList(email));
         scimUser.setOrigin(Origin.UAA);
         scimUser.setPassword(password);
+        scimUser.setVerified(true);
 
         return scimUser;
     }

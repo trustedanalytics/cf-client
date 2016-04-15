@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>cf-client</artifactId>
-    <version>0.4.31</version>
+    <version>0.4.32</version>
     <parent>
         <groupId>org.trustedanalytics</groupId>
         <artifactId>trustedanalytics-cloud-parent</artifactId>
@@ -40,7 +40,7 @@
         <dependency>
             <groupId>org.cloudfoundry.identity</groupId>
             <artifactId>cloudfoundry-identity-scim</artifactId>
-            <version>2.4.0</version>
+            <version>2.7.4</version>
             <exclusions>
                 <exclusion>
                     <artifactId>slf4j-log4j12</artifactId>
@@ -49,6 +49,10 @@
                 <exclusion>
                     <artifactId>servlet-api</artifactId>
                     <groupId>org.mortbay.jetty</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>flyway-core</artifactId>
+                    <groupId>org.flywaydb</groupId>
                 </exclusion>
             </exclusions>
         </dependency>

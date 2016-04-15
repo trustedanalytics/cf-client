@@ -24,14 +24,14 @@ import java.util.UUID;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
+import org.cloudfoundry.identity.uaa.rest.SearchResults;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestOperations;
 
-import org.trustedanalytics.org.cloudfoundry.identity.uaa.scim.ScimUser;
+import org.cloudfoundry.identity.uaa.scim.ScimUser;
 import org.trustedanalytics.org.cloudfoundry.identity.uaa.scim.ScimUserFactory;
-import org.trustedanalytics.org.cloudfoundry.identity.uaa.scim.SearchResults;
 
 public class UaaClient implements UaaOperations {
 
