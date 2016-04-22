@@ -44,6 +44,10 @@ public interface CcServiceResource {
     @RequestLine("GET /v2/services")
     Page<CcExtendedService> getServices();
 
+    @RequestLine("GET /v2/services?q={query}")
+    Page<CcExtendedService> getServices(
+            @Param(value = "query", expander = FilterExpander.class) FilterQuery query);
+
     @RequestLine("GET")
     Page<CcExtendedService> getServices(URI nextPageUrl);
 

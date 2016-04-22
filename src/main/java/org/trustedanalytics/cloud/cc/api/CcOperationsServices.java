@@ -41,6 +41,12 @@ public interface CcOperationsServices extends CcOperationsCommon {
     Observable<CcExtendedService> getExtendedServices();
 
     /**
+     * @param filterQuery filter to use when requesting services
+     * @return filtered services
+     */
+    Observable<CcExtendedService> getExtendedServices(FilterQuery filterQuery);
+
+    /**
      * Returns service plans within service identified by given GUID
      * @return services plans
      */
