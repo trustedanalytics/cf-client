@@ -24,7 +24,6 @@ import org.trustedanalytics.cloud.cc.api.CcExtendedService;
 import org.trustedanalytics.cloud.cc.api.CcExtendedServicePlan;
 import org.trustedanalytics.cloud.cc.api.CcNewServiceKey;
 import org.trustedanalytics.cloud.cc.api.CcPlanVisibility;
-import org.trustedanalytics.cloud.cc.api.CcPlanVisibilityEntity;
 import org.trustedanalytics.cloud.cc.api.CcServiceKey;
 import org.trustedanalytics.cloud.cc.api.Page;
 import org.trustedanalytics.cloud.cc.api.CcNewServiceInstance;

@@ -36,6 +36,16 @@ public enum Role {
 
     private final String roleName;
 
+    private static final Map<String, Role> ROLES_MAP = ImmutableMap.<String, Role>builder()
+            .put("space_developer", Role.DEVELOPERS)
+            .put("space_manager", Role.MANAGERS)
+            .put("space_auditor", Role.AUDITORS)
+            .put("org_user", Role.USERS)
+            .put("org_manager", Role.MANAGERS)
+            .put("org_auditor", Role.AUDITORS)
+            .put("billing_manager", Role.BILLING_MANAGERS)
+            .build();
+
     private Role(String roleName) {
         this.roleName = roleName;
     }
@@ -51,13 +61,4 @@ public enum Role {
         return role;
     }
 
-    private static final Map<String, Role> ROLES_MAP = ImmutableMap.<String, Role>builder()
-            .put("space_developer", Role.DEVELOPERS)
-            .put("space_manager", Role.MANAGERS)
-            .put("space_auditor", Role.AUDITORS)
-            .put("org_user", Role.USERS)
-            .put("org_manager", Role.MANAGERS)
-            .put("org_auditor", Role.AUDITORS)
-            .put("billing_manager", Role.BILLING_MANAGERS)
-            .build();
 }
