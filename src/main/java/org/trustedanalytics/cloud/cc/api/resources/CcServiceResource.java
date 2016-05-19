@@ -100,4 +100,10 @@ public interface CcServiceResource {
     @Headers("Content-Type: application/json")
     @Body("%7B\"service_plan_guid\": \"{service_plan_guid}\", \"organization_guid\": \"{organization_guid}\"%7D")
     CcPlanVisibility setServicePlanVisibility(@Param("service_plan_guid") UUID servicePlanGuid, @Param("organization_guid") UUID organizationGuid);
+
+    @RequestLine("GET /v2/service_plan_visibilities?q={query}")
+    Page<CcPlanVisibility> getServicePlanVisibility(@Param(value = "query", expander = FilterExpander.class) FilterQuery query);
+
+    @RequestLine("GET")
+    Page<CcPlanVisibility> getServicePlanVisibility(URI nextPageUrl);
 }

@@ -449,6 +449,11 @@ public class CcClient implements CcOperations {
         throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG + FeignClient.class.getName());
     }
 
+    @Override
+    public Observable<CcPlanVisibility> getExtendedServicePlanVisibility(FilterQuery filterQuery) {
+        throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG + FeignClient.class.getName());
+    }
+
     @Override public Observable<CcExtendedServiceInstance> createServiceInstance(
         CcNewServiceInstance serviceInstance) {
 

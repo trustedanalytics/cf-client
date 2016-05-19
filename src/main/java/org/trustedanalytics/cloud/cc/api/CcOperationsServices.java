@@ -138,8 +138,14 @@ public interface CcOperationsServices extends CcOperationsCommon {
      * Set visibility of service plan to specific organization
      * @param servicePlanGuid service plan GUID
      * @param organizationGuid organization GUID
-     * @return services plan
+     * @return services plan visibility
      */
     Observable<CcPlanVisibility> setExtendedServicePlanVisibility(UUID servicePlanGuid, UUID organizationGuid);
 
+    /**
+     * Get visibility of service plan to specific organization
+     * @param filterQuery filter
+     * @return services plan visibility
+     */
+    Observable<CcPlanVisibility> getExtendedServicePlanVisibility(FilterQuery filterQuery);
 }

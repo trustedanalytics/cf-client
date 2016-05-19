@@ -345,6 +345,12 @@ public class FeignClient implements CcOperations {
         return Observable.defer(() -> Observable.just(serviceResource.setServicePlanVisibility(servicePlanGuid, organizationGuid)));
     }
 
+    @Override
+    public Observable<CcPlanVisibility> getExtendedServicePlanVisibility(FilterQuery filterQuery) {
+        return Observable.defer(() -> concatPages(serviceResource.getServicePlanVisibility(filterQuery),
+                serviceResource::getServicePlanVisibility));
+    }
+
     @Override public Observable<CcExtendedServiceInstance> createServiceInstance(CcNewServiceInstance serviceInstance) {
         return Observable.defer(() -> Observable.just(serviceResource.createServiceInstance(serviceInstance)));
     }
