@@ -17,40 +17,19 @@ package org.trustedanalytics.cloud.cc.api.customizations;
 
 import com.google.common.collect.ImmutableList;
 
-import feign.Response;
-import feign.codec.ErrorDecoder;
-
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 
-/**
- * https://docs.cloudfoundry.org/running/troubleshooting/v2-errors.html
- */
-public class CloudFoundryErrorDecoder implements ErrorDecoder {
-    private final ErrorDecoder defaultDecoder = new ErrorDecoder.Default();
-    private final Collection<ErrorDecoderHandler> handlers;
+public class CloudFoundryErrorDecoder extends CompositeErrorDecoder {
 
     public CloudFoundryErrorDecoder() {
-        this(Collections.emptyList());
-    }
-
-    public CloudFoundryErrorDecoder(ErrorDecoderHandler... handlers) {
-        this(Arrays.asList(handlers));
+        super(new CloudFoundryErrorDecoderHandler());
     }
 
     public CloudFoundryErrorDecoder(Collection<ErrorDecoderHandler> handlers) {
-        this.handlers = ImmutableList.<ErrorDecoderHandler>builder()
-                                     .addAll(handlers)
-                                     .add(new CloudFoundryErrorDecoderHandler())
-                                     .build();
+        super(ImmutableList.<ErrorDecoderHandler>builder()
+            .addAll(handlers)
+            .add(new CloudFoundryErrorDecoderHandler())
+            .build());
     }
 
-    @Override
-    public Exception decode(String methodKey, Response response) {
-        return handlers.stream().filter(handler -> handler.test(response))
-                       .findFirst()
-                       .map(handler -> handler.apply(methodKey, response))
-                       .orElse(defaultDecoder.decode(methodKey, response));
-    }
 }
