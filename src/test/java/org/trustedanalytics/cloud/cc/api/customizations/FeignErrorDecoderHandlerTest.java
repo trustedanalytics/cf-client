@@ -120,8 +120,9 @@ public class FeignErrorDecoderHandlerTest {
         try {
             final Response.Body body = mock(Response.Body.class);
 
-            when(body.asInputStream()).thenAnswer(invocation -> IOUtils.toInputStream(content));
+            when(body.asInputStream()).thenReturn(IOUtils.toInputStream(content));
             when(body.asReader()).thenReturn(new StringReader(content));
+            when(body.isRepeatable()).thenReturn(false);
 
             return body;
         } catch (IOException e) {

@@ -53,7 +53,9 @@ public class FeignErrorDecoderHandler implements ErrorDecoderHandler  {
 
     @Override
     public boolean test(Response response) {
-        return nodes(response).findAny().isPresent();
+        // In some cases body can be read only once and therefore we need to try best
+        // effort approach when checking whether we can decode exception.
+        return !response.body().isRepeatable() || nodes(response).findAny().isPresent();
     }
 
     private Stream<JsonNode> nodes(Response response) {
