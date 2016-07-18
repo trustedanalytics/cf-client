@@ -91,6 +91,13 @@ public interface CcOperationsServices extends CcOperationsCommon {
     Observable<CcExtendedServiceInstance> getExtendedServiceInstances(FilterQuery filterQuery, int depth);
 
     /**
+     * @param instanceGuid GUID
+     * @return service instance identified by given GUID
+     */
+    Observable<CcExtendedServiceInstance> getServiceInstance(UUID instanceGuid);
+
+
+    /**
      * Deletes service instance identified by given GUID.
      * @param instanceGuid GUID
      */

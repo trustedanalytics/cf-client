@@ -77,6 +77,9 @@ public interface CcServiceResource {
     @RequestLine("POST /v2/service_instances")
     CcExtendedServiceInstance createServiceInstance(CcNewServiceInstance instance);
 
+    @RequestLine("GET /v2/service_instances/{instance}")
+    CcExtendedServiceInstance getServiceInstance(@Param("instance") UUID instanceGuid);
+
     @RequestLine("DELETE /v2/service_instances/{instance}")
     void deleteServiceInstance(@Param("instance") UUID instance);
 

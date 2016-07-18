@@ -180,8 +180,10 @@ public class CcClient implements CcOperations {
     @Override
     public Observable<CcOrg> getOrgs() {
         return Observable.defer(() ->
-                concatPages(getForEntity(baseUrl + "/v2/organizations", new ParameterizedTypeReference<Page<CcOrg>>() {}),
-                        nextUrl -> getForEntity(baseUrl + nextUrl, new ParameterizedTypeReference<Page<CcOrg>>() {})));
+                concatPages(getForEntity(baseUrl + "/v2/organizations", new ParameterizedTypeReference<Page<CcOrg>>() {
+                        }),
+                        nextUrl -> getForEntity(baseUrl + nextUrl, new ParameterizedTypeReference<Page<CcOrg>>() {
+                        })));
     }
 
     @Override
@@ -444,6 +446,7 @@ public class CcClient implements CcOperations {
         throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG + FeignClient.class.getName());
     }
 
+
     @Override
     public Observable<CcPlanVisibility> setExtendedServicePlanVisibility(UUID servicePlanGuid, UUID organizationGuid) {
         throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG + FeignClient.class.getName());
@@ -465,6 +468,11 @@ public class CcClient implements CcOperations {
         String path = "/v2/service_instances";
         return Observable.defer(() ->
             Observable.just(template.postForEntity(baseUrl + path, serviceInstance, CcExtendedServiceInstance.class).getBody()));
+    }
+
+    @Override
+    public Observable<CcExtendedServiceInstance> getServiceInstance(UUID instanceGuid) {
+        throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG + FeignClient.class.getName());
     }
 
     @Override public void deleteServiceInstance(UUID instanceGuid) {
