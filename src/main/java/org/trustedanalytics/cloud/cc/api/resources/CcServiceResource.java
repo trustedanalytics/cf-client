@@ -74,6 +74,9 @@ public interface CcServiceResource {
     @RequestLine("GET")
     Page<CcExtendedServiceInstance> getExtendedServiceInstances(URI nextPageUrl);
 
+    @RequestLine("GET /v2/service_plans/{service_plan_guid}")
+    CcExtendedServicePlan getExtendedServicePlan(@Param("service_plan_guid") UUID servicePlanGuid);
+
     @RequestLine("POST /v2/service_instances")
     CcExtendedServiceInstance createServiceInstance(CcNewServiceInstance instance);
 

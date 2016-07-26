@@ -53,6 +53,13 @@ public interface CcOperationsServices extends CcOperationsCommon {
     Observable<CcExtendedServicePlan> getExtendedServicePlans(UUID serviceGuid);
 
     /**
+     *  Get visibility of service plan to specific organization
+     *  @param servicePlanGuid
+     *  @return service plan identified by given service plan GUID
+     */
+    Observable<CcExtendedServicePlan> getExtendedServicePlan(UUID servicePlanGuid);
+
+    /**
      * Returns service identified by given GUID.
      * @param serviceGuid GUID
      * @return service

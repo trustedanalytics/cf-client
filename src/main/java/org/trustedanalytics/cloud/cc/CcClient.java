@@ -422,6 +422,11 @@ public class CcClient implements CcOperations {
                     }, pathVars)));
     }
 
+    @Override
+    public Observable<CcExtendedServicePlan> getExtendedServicePlan(UUID servicePlanGuid) {
+        throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG + FeignClient.class.getName());
+    }
+
     @Override public Observable<CcExtendedService> getService(UUID serviceGuid) {
         throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MSG + FeignClient.class.getName());
     }
