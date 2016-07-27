@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
+@Deprecated
 public class CloudFoundryErrorDecoderHandler implements ErrorDecoderHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(CloudFoundryErrorDecoderHandler.class);
     private static final ObjectMapper MAPPER = new ObjectMapper();

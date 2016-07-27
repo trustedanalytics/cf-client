@@ -17,24 +17,29 @@ package org.trustedanalytics.cloud.cc.api.customizations;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Charsets;
 import com.google.common.collect.ImmutableSet;
 
-import feign.FeignException;
 import feign.Response;
 
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.util.Set;
 import java.util.stream.Stream;
 
-public class FeignErrorDecoderHandler implements ErrorDecoderHandler  {
+public class FeignErrorDecoderHandler implements ErrorDecoderHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(FeignErrorDecoderHandler.class);
+    private static final String EMPTY_STRING = "";
     private static final ObjectMapper MAPPER = new ObjectMapper();
+
+    static final String FAILED_ACTION_MESSAGE = "Unable to perform requested action";
+
     private final Set<String> fieldPaths;
 
-    public FeignErrorDecoderHandler(String ...fieldPaths) {
+
+    public FeignErrorDecoderHandler(String... fieldPaths) {
         this.fieldPaths = ImmutableSet.copyOf(fieldPaths);
     }
 
@@ -44,28 +49,29 @@ public class FeignErrorDecoderHandler implements ErrorDecoderHandler  {
 
     @Override
     public Exception apply(String methodKey, Response response) {
-        return nodes(response)
-            .map(JsonNode::asText)
-            .reduce((s1, s2) -> String.join(", ", s1, s2))
+        return decodeExpectedFields(response).reduce((field1, field2) -> String.join(", ", field1, field2))
             .map(message -> (Exception) new FeignResponseException(response.status(), message))
-            .orElse(FeignException.errorStatus(methodKey, response));
+            .orElse(new FeignResponseException(response.status(), FAILED_ACTION_MESSAGE));
     }
 
     @Override
     public boolean test(Response response) {
-        // In some cases body can be read only once and therefore we need to try best
-        // effort approach when checking whether we can decode exception.
-        return !response.body().isRepeatable() || nodes(response).findAny().isPresent();
+        // If response body is not repeatable we need to guess whether we can decode it
+        return !response.body().isRepeatable() || decodeExpectedFields(response).findAny()
+            .isPresent();
     }
 
-    private Stream<JsonNode> nodes(Response response) {
+    private Stream<String> decodeExpectedFields(Response response) {
+        String body = EMPTY_STRING;
         try {
-            final JsonNode json = MAPPER.readValue(response.body().asInputStream(), JsonNode.class);
+            body = IOUtils.toString(response.body().asInputStream(), Charsets.UTF_8.toString());
+            JsonNode json = MAPPER.readValue(body, JsonNode.class);
             return fieldPaths.stream()
                 .map(json::path)
-                .filter(JsonNode::isValueNode);
-        } catch (IOException e) {
-            LOGGER.debug("Unable to deserialize response:", e);
+                .filter(JsonNode::isValueNode)
+                .map(JsonNode::asText);
+        } catch (Exception e) {
+            LOGGER.info("Unable to deserialize response: {}", body);
             return Stream.empty();
         }
     }

@@ -23,7 +23,6 @@ import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import feign.FeignException;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 
@@ -70,14 +69,40 @@ public class FeignErrorDecoderHandlerTest {
                 new FeignErrorDecoderHandler("description"),
                 Response.create(404, "", Collections.emptyMap(), mockBody("{\"description\": {\"key\":\"value\"}}")),
                 // then
-                isA(FeignException.class)
+                allOf(
+                    isA(FeignResponseException.class),
+                    hasProperty("message", is(FeignErrorDecoderHandler.FAILED_ACTION_MESSAGE))
+                )
             },
             {"Decode not expected field",
                 // given
                 new FeignErrorDecoderHandler("description"),
                 Response.create(404, "", Collections.emptyMap(), mockBody("{\"not_expected\": \"value\"}")),
                 // then
-                isA(FeignException.class)
+                allOf(
+                    isA(FeignResponseException.class),
+                    hasProperty("message", is(FeignErrorDecoderHandler.FAILED_ACTION_MESSAGE))
+                )
+            },
+            {"Decode invalid json",
+                // given
+                new FeignErrorDecoderHandler("description"),
+                Response.create(404, "", Collections.emptyMap(), mockBody("{")),
+                // then
+                allOf(
+                    isA(FeignResponseException.class),
+                    hasProperty("message", is(FeignErrorDecoderHandler.FAILED_ACTION_MESSAGE))
+                )
+            },
+            {"Decode empty body",
+                // given
+                new FeignErrorDecoderHandler("description"),
+                Response.create(404, "", Collections.emptyMap(), mockBody("")),
+                // then
+                allOf(
+                    isA(FeignResponseException.class),
+                    hasProperty("message", is(FeignErrorDecoderHandler.FAILED_ACTION_MESSAGE))
+                )
             },
             {"Decode multiple expected fields",
                 // given

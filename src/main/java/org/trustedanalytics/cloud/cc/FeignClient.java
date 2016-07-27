@@ -38,7 +38,8 @@ import org.trustedanalytics.cloud.cc.api.CcServiceKey;
 import org.trustedanalytics.cloud.cc.api.CcSpace;
 import org.trustedanalytics.cloud.cc.api.CcSummary;
 import org.trustedanalytics.cloud.cc.api.Page;
-import org.trustedanalytics.cloud.cc.api.customizations.CloudFoundryErrorDecoder;
+import org.trustedanalytics.cloud.cc.api.customizations.CompositeErrorDecoder;
+import org.trustedanalytics.cloud.cc.api.customizations.FeignErrorDecoderHandler;
 import org.trustedanalytics.cloud.cc.api.loggers.ScramblingSlf4jLogger;
 import org.trustedanalytics.cloud.cc.api.manageusers.CcOrgUser;
 import org.trustedanalytics.cloud.cc.api.manageusers.CcOrgUsersList;
@@ -138,7 +139,7 @@ public class FeignClient implements CcOperations {
                 .options(new Request.Options(CONNECT_TIMEOUT, READ_TIMEOUT))
                 .logger(new ScramblingSlf4jLogger(FeignClient.class))
                 .logLevel(feign.Logger.Level.BASIC)
-                .errorDecoder(new CloudFoundryErrorDecoder()));
+                .errorDecoder(new CompositeErrorDecoder(new FeignErrorDecoderHandler("description"))));
 
         this.applicationResource = builder.target(CcApplicationResource.class, targetUrl);
         this.organizationResource = builder.target(CcOrganizationResource.class, targetUrl);
