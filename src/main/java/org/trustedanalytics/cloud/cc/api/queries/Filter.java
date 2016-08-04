@@ -24,6 +24,7 @@ package org.trustedanalytics.cloud.cc.api.queries;
 public enum Filter {
     ACTIVE("active"),
     APP_GUID("app_guid"),
+    DEVELOPER_GUID("developer_guid"),
     DOMAIN_GUID("domain_guid"),
     HOST("host"),
     LABEL("label"),
